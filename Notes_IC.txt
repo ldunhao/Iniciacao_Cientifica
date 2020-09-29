@@ -1,0 +1,17 @@
+-------- ANOTAÇÕES DA IC --------
+
+=> 21/9/2020
+  -> Calcular desvio padrão. 
+  -> Tempo de execução.
+  -> Simplificar o código para deixar ao máximo parecido com o do pdf.
+
+  -- Novo algoritmo
+    -> Utilizar tabela de desperção.
+    -> Utilizar a função de dispersão do python.
+    -> Ver se o retorno está entre 1 e L para ter a mesma probabilidade para todos os elementos.
+    -> Variar o tamanho de L em pequeno, médio e grande.
+
+=> 28/9/2020
+  -> Calcular desvio padrão para todos os algoritmos. 
+
+  -- Novo algoritmo
