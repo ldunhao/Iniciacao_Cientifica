@@ -14,4 +14,17 @@
 => 28/9/2020
   -> Calcular desvio padrão para todos os algoritmos. 
 
-  -- Novo algoritmo
+=> 05/10/2020
+  -> Refazer a tabela de modo que ocupe meia página.
+  -> Imprimir as etapas em LATEC.
+  -> Fazer os i's como uma tabela, os xi's como outra e assim em diante, deixar cada tabela embaixo da outra.
+  
+Exemplos Perceptron
+  => Exemplo 1:
+    -> [-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+  => Exemplo 2:
+    -> [1,1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1]
+  => Exemplo 3:
+    -> [-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1]
+  => Exemplo 4:
+    -> [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,]
