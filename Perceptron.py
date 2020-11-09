@@ -71,22 +71,26 @@ def main():
   W = Perceptron(X,n,W,Y,b)
 
   fig = plt.figure()
-  ax = fig.gca()
+  # ax = fig.gca()
+  ax = fig.add_subplot(111, projection='3d')
 
   print(W)
 
+  eixoZPretos = [0]*len(eixoXPretos)
+  eixoZBrancos = [0]*len(eixoXBrancos)
+
   x = np.linspace(-5,5)
-  y = W[0]*x + W[1]
+  y = 2*x + 1
 
   plt.plot(x, y, '-r', label=f"y={W[0]}x+{W[1]}")
 
-  ax.scatter(eixoXBrancos,eixoYBrancos,c = 'green')
-  ax.scatter(eixoXPretos,eixoYPretos,c = 'black')
+  ax.scatter(eixoXBrancos,eixoYBrancos,eixoZBrancos,c = 'green')
+  ax.scatter(eixoXPretos,eixoYPretos,eixoZPretos,c = 'black')
 
   plt.title('Perceptron')
   ax.set_xlabel('Eixo X')
   ax.set_ylabel('Eixo Y')
-  # ax.set_zlabel('Z-axis')
+  ax.set_zlabel('Eixo Z')
   plt.legend(loc='upper left')
   plt.grid()
   plt.show()
