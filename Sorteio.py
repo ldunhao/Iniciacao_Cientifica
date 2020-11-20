@@ -45,7 +45,7 @@ def main():
   S = iter(myclass)
 
   start_time = time.time()
-  for i in range(1,100001):
+  for i in range(1,1001):
     tmp = Escolhe_Elementos(S)
     df.loc[tmp, 'count'] += 1
     S = iter(myclass)

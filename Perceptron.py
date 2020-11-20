@@ -5,6 +5,78 @@ import random
 import matplotlib.pyplot as plt
 import time
 
+############ Variáveis para plotar o gráfico
+eixoXPretos = []
+eixoYPretos = []
+eixoXBrancos = []
+eixoYBrancos = []
+############
+
+def DistinguishPoints(X,Y):
+  for i in range(len(X)):
+    if(Y[i] == -1):
+      eixoXBrancos.append(X[i][0])
+      eixoYBrancos.append(X[i][1])
+    else:
+      eixoXPretos.append(X[i][0])
+      eixoYPretos.append(X[i][1])
+
+def GetMargin(X,W,b):
+  margin = math.inf
+  for i in range(len(X)):
+    margin = min(margin,CalcDistPointToLine(X[i],W,b))
+  
+  return margin
+
+def VerifyPos(SzBrancos,SzPretos,W,b):
+  ok = True
+  for i in range(SzBrancos):
+    if(CheckPos(eixoXBrancos[i],eixoYBrancos[i],W,b) == 1):
+      ok = False
+
+  for i in range(SzPretos):
+    if(CheckPos(eixoXPretos[i],eixoYPretos[i],W,b) == -1):
+      ok = False
+
+  return ok
+
+def CheckPos(xp,yp,W,b):
+  m = -W[1]/W[2]
+  k = (b*W[0])/W[2]
+
+  if(yp - (m*xp + k) < 0):
+    return -1
+  elif(yp - (m*xp + k) > 0):
+    return 1
+  else:
+    return 0
+
+def CalcDistPointToLine(P,W,b):
+  m = -W[1]/W[2]
+  k = (b*W[0])/W[2]
+
+  Dist = abs(k + (m*P[0]) - P[1])/math.sqrt(1 + m**2)
+
+  return Dist
+
+def Plot(W,b):
+  fig = plt.figure()
+  ax = fig.gca() ## Plot em 2D
+  # ax = fig.add_subplot(111, projection='3d') ## Plot em 3D
+
+  x = np.linspace(-1,30)
+  y = (-W[1]*x)/W[2] + (b*W[0])/W[2] ## Formato -> y = ax + b
+  plt.plot(x, y, '-r', label=f"2*x + 1")
+
+  ax.scatter(eixoXBrancos,eixoYBrancos,c = 'green')
+  ax.scatter(eixoXPretos,eixoYPretos,c = 'black')
+
+  plt.title('Perceptron')
+  ax.set_xlabel('Eixo X')
+  ax.set_ylabel('Eixo Y')
+  plt.grid()
+  plt.show()
+
 def sinal(z):
   if(z>0):
     return 1
@@ -42,58 +114,32 @@ def Perceptron(X,n,W,Ylinha,b):
 
       if(i>=n or l==0):
         break
+    
+    if(cont % 500 == 0):
+      Plot(W,b)
 
-  print(f"Número de iterações {cont}")
+  print("")
+  print(f"Número de iterações: {cont}")
   return W
 
 def main():
   X = [[14,0],[18,0.7],[20,1],[22,2],[24,4],[26,6],[27,8],[27.5,10],[28,14],[27.5,18],[27,20],[26,22],[24,24],[22,25.5],[20,26.5],[18,27],[14,28],[10,27],[8,26.5],[6,25.5],[4,24],[2.5,22],[1,20],[0.5,18],[0,14],[0.5,10],[1,8],[2.5,6],[4,4],[6,2],[8,1],[10,0.5]]
   n = len(X)
   W = [0,1]
-  Y = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,]
+  Y = [-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1]
   b = -1
 
-  eixoXPretos = []
-  eixoYPretos = []
-  eixoXBrancos = []
-  eixoYBrancos = []
-
-  for i in range(len(X)):
-    if(Y[i] == -1):
-      eixoXBrancos.append(X[i][0])
-      eixoYBrancos.append(X[i][1])
-    else:
-      eixoXPretos.append(X[i][0])
-      eixoYPretos.append(X[i][1])
-
-
- 
+  DistinguishPoints(X,Y)
   W = Perceptron(X,n,W,Y,b)
 
-  fig = plt.figure()
-  # ax = fig.gca()
-  ax = fig.add_subplot(111, projection='3d')
+  print("")
+  print(f"A margem é: {GetMargin(X,W,b)}")
+  print("")
 
-  print(W)
+  print("Os pontos foram separados corretamente") if VerifyPos(len(eixoXBrancos),len(eixoXPretos),W,b) else print("Os pontos não foram separados corretamente")
+  
+  Plot(W,b)
 
-  eixoZPretos = [0]*len(eixoXPretos)
-  eixoZBrancos = [0]*len(eixoXBrancos)
-
-  x = np.linspace(-5,5)
-  y = 2*x + 1
-
-  plt.plot(x, y, '-r', label=f"y={W[0]}x+{W[1]}")
-
-  ax.scatter(eixoXBrancos,eixoYBrancos,eixoZBrancos,c = 'green')
-  ax.scatter(eixoXPretos,eixoYPretos,eixoZPretos,c = 'black')
-
-  plt.title('Perceptron')
-  ax.set_xlabel('Eixo X')
-  ax.set_ylabel('Eixo Y')
-  ax.set_zlabel('Eixo Z')
-  plt.legend(loc='upper left')
-  plt.grid()
-  plt.show()
 
 main()
 

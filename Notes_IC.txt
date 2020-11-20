@@ -27,4 +27,8 @@ Exemplos Perceptron
   => Exemplo 3:
     -> [-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1]
   => Exemplo 4:
-    -> [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,]
+    -> [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1]
+
+=> Achar a margem (menor distância de um ponto a reta) --> Feito
+=> Testar se todos os pontos estão separados de forma correta --> Feito
+=> Salvar os graficos a cada certo num de iterações --> Feito
