@@ -11,7 +11,6 @@ class Fluxo:
     self.limit = limit
     self.cont = 1 
 
-
   def __iter__(self): 
     self.x = random.randint(self.start,self.limit)
     return self
@@ -44,6 +43,18 @@ class HashTable:
   def __setitem__(self, key, val):
     h = self.get_hash(key)
     self.arr[h] = val
+
+def Plot(df,Ft,St):
+  print(f"\nMedia: {np.mean(df['count'])}\n")
+  print(f"\nTempo de execução: {Ft - St}\n")
+  plt.title('Escolhe-Elementos')
+  plt.xlabel('Elementos')
+  plt.ylabel('Quantidades de escolha por elemento')
+  plt.bar(df.index, height=df['count'], data = df)
+  plt.axhline(y = np.mean(df['count']), 
+          color = 'red',
+          linestyle='-')
+  plt.show()
 
 def Conta_Elementos_Dist_Classico(S):
   L = 20000
@@ -79,13 +90,14 @@ def main():
   print("Digite o intervalo.")
   start = int(input("De: "))
   end = int(input("Até: "))
-
   iteracoes = int(input("Iterações: "))
+
   df = pd.DataFrame(index = np.arange(start, end+1))
   df['count'] = 0
   
   myclass = Fluxo(start,end)
   S = iter(myclass)
+
   start_time = time.time()
   for i in range(1,iteracoes+1):
     tmp = Conta_Elementos_Distintos(S)
@@ -94,15 +106,6 @@ def main():
     S = iter(myclass)
   finish_time = time.time()
 
-  print(f"\nMedia: {np.mean(df['count'])}\n")
-  print(f"\nTempo de execução para {end} iterações: {finish_time - start_time}\n")
-  plt.title('Escolhe-Elementos')
-  plt.xlabel('Elementos')
-  plt.ylabel('Quantidades de escolha por elemento')
-  plt.bar(df.index, height=df['count'], data = df)
-  plt.axhline(y = np.mean(df['count']), 
-          color = 'red',
-          linestyle='-')
-  plt.show()
+  Plot(df,finish_time,start_time)
 
 main()

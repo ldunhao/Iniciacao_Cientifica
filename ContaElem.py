@@ -20,6 +20,19 @@ class Fluxo:
     self.x = x + 1; 
     return x
   
+def Plot(df,Ft,St):
+  print(f"\nMédia: {np.mean(df['count'])}\n")
+  print(f"\nTempo de execução: {Ft - St}\n")
+
+  plt.title('Conta Elementos')
+  plt.xlabel('Números de elementos')
+  plt.ylabel('Valor por elemento')
+  plt.bar(df.index, height=df['count'], data = df)
+  plt.axhline(y = np.mean(df['count']), 
+          color = 'red',
+          linestyle='-')
+  plt.show()
+
 def escolher_aleatoriamente(z):
   if(z == 0):
     return 1
@@ -44,7 +57,6 @@ def Conta_Elemento(S):
         z = z + 1
     a = next(S)
   
-
   return math.pow(2,z) - 1
 
 def main():
@@ -52,30 +64,19 @@ def main():
   start = int(input("De: "))
   end = int(input("Até: "))
 
-  df = pd.DataFrame(index = np.arange(1, 10001)) # Se for mudar o DataFrame, mudar tbm o range
+  df = pd.DataFrame(index = np.arange(1, 1001)) # Se for mudar o DataFrame, mudar tbm o range
   df['count'] = 0
 
   myclass = Fluxo(start,end)
   S = iter(myclass)
 
   start_time = time.time()
-  for i in range(1,10001): # Se for mudar o range, mudar tbm o DataFrame
+  for i in range(1,1001): # Se for mudar o range, mudar tbm o DataFrame
     tmp = Conta_Elemento(S)
     df.loc[i, 'count'] = tmp
     S = iter(myclass)
   finish_time = time.time()
 
-  
-  print(f"\nO resultado é: {np.mean(df['count'])}\n")
-  print(f"\nTempo de execução para 10000 iterações: {finish_time - start_time}\n")
-
-  plt.title('Conta Elementos')
-  plt.xlabel('Números de elementos')
-  plt.ylabel('Valor por elemento')
-  plt.bar(df.index, height=df['count'], data = df)
-  plt.axhline(y = np.mean(df['count']), 
-          color = 'red',
-          linestyle='-')
-  plt.show()
+  Plot(df,finish_time,start_time)
 
 main()
