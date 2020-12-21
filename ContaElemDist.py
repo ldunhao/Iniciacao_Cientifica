@@ -56,21 +56,6 @@ def Plot(df,Ft,St):
           linestyle='-')
   plt.show()
 
-def Conta_Elementos_Dist_Classico(S):
-  L = 20000
-  V = [0]*L
-  a = next(S)
-  while a != None: 
-    if V[a] == 0: 
-      V[a] = V[a] + 1
-    a = next(S)
-  
-  sum = 0
-  for i in V:
-    sum = sum + i
-
-  return sum
-
 def Conta_Elementos_Distintos(S):
   L = 333
   V = [0]*L

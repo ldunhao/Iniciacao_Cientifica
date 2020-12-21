@@ -5,6 +5,26 @@ import random
 import matplotlib.pyplot as plt
 import time
 
+def Plot(a,b):
+  print(f"a = {a}")
+  print(f"b = {b}")
+  
+  fig = plt.figure()
+  ax = fig.gca() ## Plot em 2D
+
+  ## Plotar a reta
+  x = np.linspace(-5,5)
+  y = a*x + b
+  plt.plot(x, y, '-r', label=f"{a}x + {b}")
+  ################
+
+  plt.title('Regressão Linear')
+  ax.set_xlabel('Eixo X')
+  ax.set_ylabel('Eixo Y')
+  plt.legend(loc='upper left')
+  plt.grid()
+  plt.show()
+
 def RegressaoLinear(X,Y):
   n = len(X)
 
@@ -40,24 +60,6 @@ def main():
   a = round(resultado[0], 2)
   b = round(resultado[1], 2)
 
-
-  print(f"a = {a}")
-  print(f"b = {b}")
+  Plot(a,b)
   
-  fig = plt.figure()
-  ax = fig.gca() ## Plot em 2D
-
-  ## Plotar a reta
-  x = np.linspace(-5,5)
-  y = 2*x + 1
-  plt.plot(x, y, '-r', label=f"{a}x + {b}")
-  ################
-
-  plt.title('Regressão Linear')
-  ax.set_xlabel('Eixo X')
-  ax.set_ylabel('Eixo Y')
-  plt.legend(loc='upper left')
-  plt.grid()
-  plt.show()
-
 main()
