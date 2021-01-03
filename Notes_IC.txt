@@ -33,3 +33,6 @@ Exemplos Perceptron
 => Testar se todos os pontos estão separados de forma correta --> Feito
 => Salvar os graficos a cada certo num de iterações --> Feito
 => Mudar o formato dos pontos (pretas e vazadas) -> Feito
+
+=> printar os diferentes (Y[i] != Ylinha[i]) e interromper assim que achar um Y[i] = Ylinha[i]
+=> printar as mudanças dos pesos

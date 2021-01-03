@@ -110,29 +110,38 @@ def Perceptron(X,n,W,Ylinha,b):
 
     while True:
       if Y[i] != Ylinha[i]:
+        print()
+        print("-------------------------")
+        print(f"Iteração {cont}:")
+        print()
+        for z in range(n):
+          if Y[z] != Ylinha[z]:
+            aux = X[z][0]*W[0] + X[z][1]*W[1] + X[z][2]*W[2]
+            print(f"X{z+1}: {X[z][0]}.{W[0]} + {X[z][1]}.{W[1]} + {X[z][2]}.{W[2]} = {aux}")
+            print()
+            print(f"Y[i] = {Y[z]} ; Ylinha[i] = {Ylinha[z]}")
+        print()
         for j in range(d+1):
+          aux = W[j] + Ylinha[i]*X[i][j]
+          print(f"W[{j}] = {W[j]} + {Ylinha[i]} * {X[i][j]} = {aux}")
           W[j] += Ylinha[i]*X[i][j]
         l = 0
+        print("-------------------------")
       else:
         i += 1
 
       if(i>=n or l==0):
         break
     
-    print()
-    print(f"Iteração {cont}:")
-    for i in range(n):
-      aux = X[i][0]*W[0] + X[i][1]*W[1] + X[i][2]*W[2]
-      print(f"X{i+1}: {X[i][0]}.{W[0]} + {X[i][1]}.{W[1]} + {X[i][2]}.{W[2]} = {aux}")
-    print()
-    
+    # print()
+    # print(f"Iteração {cont}:")
+
     # if(cont % 500 == 0):
     #   Plot(W,b)
 
-  
-
-  print("")
+  print()
   print(f"Número de iterações: {cont}")
+
   return W
 
 def main():
@@ -145,13 +154,10 @@ def main():
   DistinguishPoints(X,Y)
   W = Perceptron(X,n,W,Y,b)
 
-  print("")
   print(f"A margem é: {round(GetMargin(X,W,b),4)}")
-  print("")
   print("Os pontos foram separados corretamente") if VerifyPos(len(eixoXBrancos),len(eixoXPretos),W,b) else print("Os pontos não foram separados corretamente")
   
   # Plot(W,b)
-
 
 main()
 
