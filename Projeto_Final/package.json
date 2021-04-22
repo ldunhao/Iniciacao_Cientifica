@@ -1,0 +1,16 @@
+{
+  "name": "Projeto_Final",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "firstline": "^2.0.2",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7",
+    "replace-in-file": "^6.2.0"
+  },
+  "scripts": {
+    "dev": "nodemon ReadCSV.js"
+  }
+}
