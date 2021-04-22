@@ -65,13 +65,13 @@ def Plot(W,b):
   ax = fig.gca() ## Plot em 2D
   # ax = fig.add_subplot(111, projection='3d') ## Plot em 3D
 
-  x = np.linspace(-0.2,1.2)
+  x = np.linspace(-0.05,1.05)
   y = (-W[1]*x)/W[2] + (b*W[0])/W[2] ## Formato -> y = ax + b
   #-b*W[0] + W[1]*X1 + W[2]*X2 = 0 Formato -> 0 = ax + by + c
   plt.plot(x, y, '-r', label=f"2*x + 1")
 
-  plt.plot([-0.2],[(-W[1]*(-0.2))/W[2] + (b*W[0])/W[2]],'.',color='green')
-  plt.plot([1.2],[(-W[1]*(1.2))/W[2] + (b*W[0])/W[2]],'.',color='green')
+  plt.plot([-0.05],[(-W[1]*(-0.05))/W[2] + (b*W[0])/W[2]],'.',color='green')
+  plt.plot([1.05],[(-W[1]*(1.05))/W[2] + (b*W[0])/W[2]],'.',color='green')
   plt.plot(eixoXBrancos,eixoYBrancos,'o',c = 'white',markeredgecolor='black')
   plt.plot(eixoXPretos,eixoYPretos,'o',c = 'black')
 
@@ -91,8 +91,10 @@ def sinal(z):
 
 def Perceptron(X,n,W,Ylinha,b):
   d = len(X[0])
+  
   for i in range(n):
-    X[i] = [-b]+X[i]
+    X[i] = [b]+X[i]
+
   W = [1]+W
   l = 0
   Y = [None]*n
@@ -110,54 +112,80 @@ def Perceptron(X,n,W,Ylinha,b):
 
     while True:
       if Y[i] != Ylinha[i]:
-        print()
-        print("-------------------------")
-        print(f"Iteração {cont}:")
-        print()
-        for z in range(n):
-          if Y[z] != Ylinha[z]:
-            aux = X[z][0]*W[0] + X[z][1]*W[1] + X[z][2]*W[2]
-            print(f"X{z+1}: {X[z][0]}.{W[0]} + {X[z][1]}.{W[1]} + {X[z][2]}.{W[2]} = {aux}")
-            print()
-            print(f"Y[i] = {Y[z]} ; Ylinha[i] = {Ylinha[z]}")
-        print()
         for j in range(d+1):
           aux = W[j] + Ylinha[i]*X[i][j]
-          print(f"W[{j}] = {W[j]} + {Ylinha[i]} * {X[i][j]} = {aux}")
           W[j] += Ylinha[i]*X[i][j]
         l = 0
-        print("-------------------------")
       else:
         i += 1
 
       if(i>=n or l==0):
         break
-    
-    # print()
-    # print(f"Iteração {cont}:")
-
-    # if(cont % 500 == 0):
-    #   Plot(W,b)
-
-  print()
-  print(f"Número de iterações: {cont}")
 
   return W
 
 def main():
-  X = [[0,0],[0,1],[1,0],[1,1]]
+  X = [[
+  1, 1, 0, 1, 1, 1, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0,
+  0
+],
+[
+  1, 1, 0, 1, 1, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0
+],
+[
+  1, 1, 0, 0, 1, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0
+],
+[
+  1, 1, 1, 0, 1, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0
+],
+[
+  1, 1, 1, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0
+],[
+  1, 1, 0, 1, 1, 1, 0,
+  0, 1, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
+  0
+],
+[
+  1, 1, 1, 1, 1, 0, 0,
+  0, 1, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 1,
+  0
+]]
   n = len(X)
-  W = [2,1]
-  Y = [-1,1,1,1]
+  W = [
+  1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1,
+  1
+]
+  Ylinha = [
+  1,  1,  1, 1,
+  1, -1, -1
+]
   b = 1
 
-  DistinguishPoints(X,Y)
-  W = Perceptron(X,n,W,Y,b)
-
+  DistinguishPoints(X,Ylinha)
+  W = Perceptron(X,n,W,Ylinha,-b)
+  print(W.length)
   print(f"A margem é: {round(GetMargin(X,W,b),4)}")
   print("Os pontos foram separados corretamente") if VerifyPos(len(eixoXBrancos),len(eixoXPretos),W,b) else print("Os pontos não foram separados corretamente")
-  
-  # Plot(W,b)
+  print(W)
+  Plot(W,b)
 
 main()
 
