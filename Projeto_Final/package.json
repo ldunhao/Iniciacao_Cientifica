@@ -4,11 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^15.0.3",
     "csv-parser": "^3.0.0",
     "firstline": "^2.0.2",
     "moment": "^2.29.1",
     "nodemon": "^2.0.7",
-    "replace-in-file": "^6.2.0"
+    "prompt-sync": "^4.2.0",
+    "replace-in-file": "^6.2.0",
+    "typescript": "^4.2.4"
   },
   "scripts": {
     "dev": "nodemon ReadCSV.js"

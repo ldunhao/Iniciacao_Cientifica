@@ -1,0 +1,3 @@
+=> Adicionar mais sintomas ao vetor do paciente. [X]
+=> Se o paciente já for escolhido randomicamente, não pode ser escolhido novamente. [X]
+=> No campo suport_ven => i == 79 , transformar em 2 variáveis, [1,0] se for 1, [0,1] se for 2 e [0,0] se for 3. [X]

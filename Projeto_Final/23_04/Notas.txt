@@ -1,0 +1,3 @@
+=> Aumentar o N° de sintomas.
+=> Fazer a verificação dos campos.
+=> Separar com mais pacientes (talvez 200+ mortos e 200+ vivos).

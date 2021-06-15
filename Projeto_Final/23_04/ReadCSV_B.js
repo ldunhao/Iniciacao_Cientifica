@@ -17,10 +17,6 @@ function getDeadAndAlive(data){
         if(linha[i] == '') doençasNull++
     }
 
-    for(var i=43;i<57;i++){
-        if(linha[i] == '') doençasNull++
-    }
-
     // if(linha[42] == 'S'){
     //     for(var i=42;i<54;i++){
     //         console.log(`${campos[i]}: ${linha[i]}`)
@@ -29,7 +25,7 @@ function getDeadAndAlive(data){
     // console.log()
 
 
-    if(doençasNull <= 20){
+    if(doençasNull != 8){
         if(linha[110]=='2'){
             for(var i=31;i<39;i++){
                 if(linha[i] == '1') sintomas.push(1)
@@ -80,8 +76,6 @@ async function getFirstLine(){
     let sintomas = []
     let rest = []
 
-    let RemoveItems = [39,40,54,55,56]
-
     console.log(campos.length)
     for(var i=0;i<campos.length;i++){
         if(campos[i].includes('DT_')) dt.push([campos[i], i]);
@@ -92,14 +86,13 @@ async function getFirstLine(){
         else rest.push([campos[i], i])
     }
 
-    // console.log(rest)
+    console.log(rest)
 
     //Printando os Sintomas
-    let cont = 0
-    for(var i=28;i<58;i++){
-        if(!RemoveItems.includes(i)) cont++,console.log([campos[i], i])
+    for(var i=31;i<42;i++){
+        console.log([campos[i], i])
     }
-    console.log(cont)
+    console.log()
 }
 // getFirstLine()
 
@@ -119,15 +112,13 @@ function Perceptron(X,n,W,Ylinha,b){
     for(var i=0;i<n;i++) X[i] = [-b].concat(X[i]);
 
     W = [1].concat(W)
-
     var l = 0
     var Y = new Array(n).fill(0)
-    var tentativas = 0
+    var cont = 0
 
-    var ok = true;
 
     while (l == 0){
-        tentativas++;
+        cont++;
 
         for(var i = 0;i<n;i++){
             var soma = 0
@@ -135,8 +126,7 @@ function Perceptron(X,n,W,Ylinha,b){
             Y[i] = sinal(soma)
         }
 
-        var i=0 
-        l=1
+        var i=0, l=1;
 
         while (true){
             if (Y[i] != Ylinha[i]){
@@ -148,23 +138,17 @@ function Perceptron(X,n,W,Ylinha,b){
             else {
                 i += 1
             }
-            
+
             if(i>=n || l==0){
                 break
             }
         }
 
-        // if(tentativas % 1000000 == 0) console.log(W)
-
-        if(tentativas == 2000){
-            console.log("Não achou um hiperplano")
-            ok = false
-            return [ok,W,tentativas]
-        }
+        // if(cont % 1000000 == 0) console.log(W)
     }   
 
-    console.log('cont = %d', tentativas)
-    return [ok,W,tentativas]
+    // console.log('cont = %d', cont)
+    return W
 } 
 // #########################################################################################
 
@@ -180,122 +164,113 @@ fs.createReadStream('ExData.csv')
     getDeadAndAlive(data)
 })
 .on('end', () => {   //Lógica aplicada quando chega no EOF
+
+    Waux = [[-25],[-6],[-12],[4],[-10],[-3],[2],[-5],[14],[-10],[1],[1],[1],[1],[-24],[25],[1],[6],[-11],[1],[1],[5],[1]]
+
     let X = []
     let n = mortosCount+vivosCount
     let Y = []
     let W = []
     var b = 1
     
-    // for(let i = 0;i<22;i++){
-    //     W.push(1)
-    // }
-    // for(let i=0;i<vivosCount;i++){
-    //     X.push(vivos[i])
-    //     Y.push(1)
-    // }
-    // for(let i=0;i<mortosCount;i++){
-    //     X.push(mortos[i])       
-    //     Y.push(-1)
-    // }
+    let randomVivos = []
+    let randomMortos = []
 
-    // let randomVivos = []
-    // let randomMortos = []
-
-    // let RandomY = []
-
-    // for(let i = 0; i<20; i++){
-    //     randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
-    //     RandomY.push(1)
-    // }
-
+    for(let i = 0; i<300; i++){
+        randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
+    }
     
-    // for(let i = 0; i<20; i++){
-    //     randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
-    //     RandomY.push(-1)
-    // }
+    for(let i = 0; i<300; i++){
+        randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
+    }
 
-    // console.log(RandomY.length)
-    // console.log(randomMortos.length+randomVivos.length)
 
-    
-    console.log('mortosCount = %d', mortosCount)
-    console.log('vivosCount = %d', vivosCount)
+    for(let i = 0;i<22;i++){
+        W.push(1)
+    }
+    for(let i=0;i<randomVivos.length;i++){
+        X.push(randomVivos[i] = [1].concat(randomVivos[i]))
+        Y.push(1)
+    }
+    for(let i=0;i<randomMortos.length;i++){
+        X.push(randomMortos[i] = [1].concat(randomMortos[i]))       
+        Y.push(-1)
+    }
 
-    // for(let i = 0; i<X.length; i++){
-    //     console.log("\nDado %d",i)
-    //     console.log(`Y[${i}] = ${Y[i]}`)
-    //     console.log(X[i])
-    //     console.log("")
-    // }
-
-    // let RandomX = randomVivos.concat(randomMortos)
-    // console.log("Tamanho de RandomX = %d", RandomX.length)
-    // n = RandomX.length
-
-    // console.log(RandomX)
     // console.log('Mortos')
     // console.log(randomMortos)
     // console.log('Vivos')
     // console.log(randomVivos)
-    // console.log('\n')
+    console.log('\n')
     // console.log('\nX.length = %d',X.length)
     // console.log('Y.length = %d', Y.length)
     // console.log('X[0].length = %d', X[0].length)
+    // console.log('mortosCount = %d', mortosCount)
+    // console.log('vivosCount = %d', vivosCount)
 
 
     // console.log(`\nAqui`)
-    
-    // let ok
-    // [ok,W] = Perceptron(RandomX,n,W,RandomY,b)
-    
-    // console.log("Não Achou", ok)
-
-    // while(!ok){
-    //     randomVivos = []
-    //     randomMortos = []
-    //     RandomY = []
-    
-    //     for(let i = 0; i<20; i++){
-    //         randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
-    //         RandomY.push(1)
-    //     }
-    
-    //     for(let i = 0; i<20; i++){
-    //         randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
-    //         RandomY.push(-1)
-    //     }
-
-    //     RandomX = randomVivos.concat(randomMortos)
-    //     n = RandomX.length
-
-    //     // console.log(RandomX)
-
-    //     ok = Perceptron(RandomX,n,W,RandomY,b)[0]
-    //     W = Perceptron(RandomX,n,W,RandomY,b)[1]
-
-    //     console.log("Não Achou", ok)
-    // }
+    // W = Perceptron(X,n,W,Y,b)
     // console.log(`\nTerminou o Perceptron`)
     // console.log(`W = ${W}`)
     // console.log('W.length = %d\n', W.length)
 
-    // for(let i=0;i<X.length;i++){
-    //     let aux = 0
-    //     for(let j=21; j>0; j--){
-    //         aux += -(W[j]*X[i][j])
+    let MortosCorretos=0
+    let VivosCorretos=0
 
-    //     }
-    //     // console.log(aux)
-    //     aux = (aux + W[0]*b)/W[22]
 
-    //     console.log(`i = ${i}; aux = ${aux}; X[i] = ${X[i]}`)
+    for(let i=0;i<X.length;i++){
+        let aux = 0
+        for(let j=21; j>0; j--){
+            aux += -(Waux[j]*X[i][j])
 
-    //     if(aux > X[i][22]) console.log('O paciente está morto')
-    //     else console.log('O paciente está vivo')
-    // }
+        }
+        // console.log(aux)
+        aux = (aux + Waux[0]*b)/Waux[22]
+
+        
+        // console.log('\n')
+        // console.log(`i = ${i}; aux = ${aux}; X[i] = ${X[i]}`)
+        // if(aux > X[i][22]) console.log('O sistema define o paciente como morto')
+        // else console.log('O sistema define o paciente como vivo')
+        
+        
+
+        if(Y[i] == '-1'){
+            console.log('Mortos')
+            console.log(`X[${i}] = ${X[i]}`)
+            console.log(`X[${i}][22] = ${X[i][22]}`)
+
+            if(aux > X[i][22]) MortosCorretos++
+        }else {
+            console.log('Vivo')
+            console.log(`X[${i}] = ${X[i]}`)
+            console.log(`X[${i}][22] = ${X[i][22]}`)
+            if (aux < X[i][22]) VivosCorretos++
+        }
+        // if(aux > X[i][22] && Y[i] == '-1') console.log('O especialista define morto')
+        // else if (aux < X[i][22] && Y[i] == '1') console.log('O especialista define vivo')
+    }
+
+    console.log('Vivos = %d; Vivos Corretos = %d', randomVivos.length, VivosCorretos)
+    console.log('Mortos = %d; Mortos Corretos = %d', randomMortos.length, MortosCorretos)
 
     //Calculando o tempo de execução do código
     hrend = process.hrtime(hrstart)
     console.info('Execution time (hr): %ds %dms\n', hrend[0], hrend[1] / 1000000)
 }
 )
+
+// i = 0; aux = -6; X[i] = -1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0 //O paciente está vivo
+// i = 1; aux = -3; X[i] = -1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 //O paciente está vivo
+// i = 2; aux = -2; X[i] = -1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 //O paciente está vivo
+// i = 3; aux = -2; X[i] = -1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 //O paciente está vivo
+// i = 4; aux = -1; X[i] = -1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 //O paciente está vivo
+// i = 5; aux = 3; X[i] = -1,1,1,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0 //O paciente está morto
+// i = 6; aux = 2; X[i] = -1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0 //O paciente está morto
+
+
+// Pegar 80% dos pacientes válidos(possui sintomas) e aplicar no Perceptron para achar o hiperplano
+// Após isso, usar os outros 20% na equação do hiperplano.
+// Ver qual o percentual de acerto dos 20% restantes.
+// Rodar um certo num de vezes, cada vez com os 80% diferentes(randomicos)

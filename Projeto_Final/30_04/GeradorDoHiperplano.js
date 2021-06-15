@@ -29,7 +29,7 @@ function getDeadAndAlive(data){
     // console.log()
 
 
-    if(doençasNull <= 20){
+    if(doençasNull <= 10){
         if(linha[110]=='2'){
             for(var i=31;i<39;i++){
                 if(linha[i] == '1') sintomas.push(1)
@@ -80,8 +80,6 @@ async function getFirstLine(){
     let sintomas = []
     let rest = []
 
-    let RemoveItems = [39,40,54,55,56]
-
     console.log(campos.length)
     for(var i=0;i<campos.length;i++){
         if(campos[i].includes('DT_')) dt.push([campos[i], i]);
@@ -92,14 +90,13 @@ async function getFirstLine(){
         else rest.push([campos[i], i])
     }
 
-    // console.log(rest)
+    console.log(rest)
 
     //Printando os Sintomas
-    let cont = 0
-    for(var i=28;i<58;i++){
-        if(!RemoveItems.includes(i)) cont++,console.log([campos[i], i])
+    for(var i=31;i<42;i++){
+        console.log([campos[i], i])
     }
-    console.log(cont)
+    console.log()
 }
 // getFirstLine()
 
@@ -186,36 +183,36 @@ fs.createReadStream('ExData.csv')
     let W = []
     var b = 1
     
-    // for(let i = 0;i<22;i++){
-    //     W.push(1)
-    // }
-    // for(let i=0;i<vivosCount;i++){
-    //     X.push(vivos[i])
-    //     Y.push(1)
-    // }
-    // for(let i=0;i<mortosCount;i++){
-    //     X.push(mortos[i])       
-    //     Y.push(-1)
-    // }
+    for(let i = 0;i<22;i++){
+        W.push(1)
+    }
+    for(let i=0;i<vivosCount;i++){
+        X.push(vivos[i])
+        Y.push(1)
+    }
+    for(let i=0;i<mortosCount;i++){
+        X.push(mortos[i])       
+        Y.push(-1)
+    }
 
-    // let randomVivos = []
-    // let randomMortos = []
+    let randomVivos = []
+    let randomMortos = []
 
-    // let RandomY = []
+    let RandomY = []
 
-    // for(let i = 0; i<20; i++){
-    //     randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
-    //     RandomY.push(1)
-    // }
+    for(let i = 0; i<30; i++){
+        randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
+        RandomY.push(1)
+    }
 
     
-    // for(let i = 0; i<20; i++){
-    //     randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
-    //     RandomY.push(-1)
-    // }
+    for(let i = 0; i<30; i++){
+        randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
+        RandomY.push(-1)
+    }
 
-    // console.log(RandomY.length)
-    // console.log(randomMortos.length+randomVivos.length)
+    console.log(RandomY.length)
+    console.log(randomMortos.length+randomVivos.length)
 
     
     console.log('mortosCount = %d', mortosCount)
@@ -228,9 +225,9 @@ fs.createReadStream('ExData.csv')
     //     console.log("")
     // }
 
-    // let RandomX = randomVivos.concat(randomMortos)
-    // console.log("Tamanho de RandomX = %d", RandomX.length)
-    // n = RandomX.length
+    let RandomX = randomVivos.concat(randomMortos)
+    console.log("Tamanho de RandomX = %d", RandomX.length)
+    n = RandomX.length
 
     // console.log(RandomX)
     // console.log('Mortos')
@@ -245,38 +242,38 @@ fs.createReadStream('ExData.csv')
 
     // console.log(`\nAqui`)
     
-    // let ok
-    // [ok,W] = Perceptron(RandomX,n,W,RandomY,b)
+    let ok
+    [ok,W] = Perceptron(RandomX,n,W,RandomY,b)
     
-    // console.log("Não Achou", ok)
+    console.log("Não Achou", ok)
 
-    // while(!ok){
-    //     randomVivos = []
-    //     randomMortos = []
-    //     RandomY = []
+    while(!ok){
+        randomVivos = []
+        randomMortos = []
+        RandomY = []
     
-    //     for(let i = 0; i<20; i++){
-    //         randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
-    //         RandomY.push(1)
-    //     }
+        for(let i = 0; i<30; i++){
+            randomVivos.push(vivos[Math.floor(Math.random() * vivos.length)])
+            RandomY.push(1)
+        }
     
-    //     for(let i = 0; i<20; i++){
-    //         randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
-    //         RandomY.push(-1)
-    //     }
+        for(let i = 0; i<30; i++){
+            randomMortos.push(mortos[Math.floor(Math.random() * mortos.length)])
+            RandomY.push(-1)
+        }
 
-    //     RandomX = randomVivos.concat(randomMortos)
-    //     n = RandomX.length
+        RandomX = randomVivos.concat(randomMortos)
+        n = RandomX.length
 
-    //     // console.log(RandomX)
+        // console.log(RandomX)
 
-    //     ok = Perceptron(RandomX,n,W,RandomY,b)[0]
-    //     W = Perceptron(RandomX,n,W,RandomY,b)[1]
+        ok = Perceptron(RandomX,n,W,RandomY,b)[0]
+        W = Perceptron(RandomX,n,W,RandomY,b)[1]
 
-    //     console.log("Não Achou", ok)
-    // }
+        console.log("Não Achou", ok)
+    }
     // console.log(`\nTerminou o Perceptron`)
-    // console.log(`W = ${W}`)
+    console.log(`W = ${W}`)
     // console.log('W.length = %d\n', W.length)
 
     // for(let i=0;i<X.length;i++){
