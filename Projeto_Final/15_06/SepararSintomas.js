@@ -8,6 +8,7 @@ let CountMortos = 0, CountVivos = 0
 let CamposNomes = []
 let PacientesTotal = [], PacientesTotalY = []
 let QntdSintomasPreenchidos = Array(56).fill(0)
+let PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
 
 async function getSintomas(data){
     // let campos = Object.keys(data).toString().split(',')
@@ -16,78 +17,11 @@ async function getSintomas(data){
     let sintomas = []
 
     for(let i=0;i<linha.length-1;i++){
-        sintomas.push(linha[i])
+        sintomas.push(parseInt(linha[i]))
     }
     
     if(linha[linha.length-1] == "Vivo")PacientesVivos.push(sintomas), CountVivos++;
     else PacientesMortos.push(sintomas), CountMortos++;
-
-    // Separação dos campos que aplicaremos no Perceptron
-    // for(var i=0;i<campos.length;i++){
-    //     campos[i] = campos[i].replace(/"|\r/g, '')
-    // }
-    
-    // let RemoveItems = [39,40,42,54,55,56]
-    
-    // let vetorcampos = []
-    
-    // let camposadd = [65,69,76,79,89,90,95,96,97,98,99,100,101,102,103,104,105,120,131,134,135,136,137,138,139,140,141,142,143,145]
-    
-    // //Sintomas que o paciente vai ter
-    // for(var i=28;i<58;i++){
-    //     if(!RemoveItems.includes(i)) vetorcampos.push(i);
-    // }
-
-    // for(var i=58;i<146;i++){
-    //     if(camposadd.includes(i)) vetorcampos.push(i)
-    // }
-    // //------------------------------------------------------------
-
-    
-
-    // let CountCamposPreenchidos = 0
-    // for(let i=0;i<vetorcampos.length;i++){
-    //     if(linha[vetorcampos[i]] != '') CountCamposPreenchidos++ 
-    // }
-
-    // QntdSintomasPreenchidos[CountCamposPreenchidos]++
-
-    // let sintomas = []
-    
-    // if(CountCamposPreenchidos >= 25){
-
-    //     if(linha[110] == '1'){ //Se o paciente estiver vivo
-    //         for(var i=0;i<vetorcampos.length;i++){
-    //             if(vetorcampos[i] == 79){
-    //                 if(linha[vetorcampos[i]] == '1') sintomas.push(1,0)
-    //                 else if(linha[vetorcampos[i]] == '2') sintomas.push(0,1)
-    //                 else if(linha[vetorcampos[i]] == '3') sintomas.push(0,0)
-    //                 else sintomas.push(1,1) //Quando o campo vier vazio
-    //             }else {
-    //                 if(linha[vetorcampos[i]] == '1') sintomas.push(1)
-    //                 else sintomas.push(0)
-    //             }
-    //         }
-    //         CountVivos++
-    //         PacientesVivos.push(sintomas)
-    //     }
-    //     else if(linha[110] == '2'){ //Se o paciente estiver morto
-    //         for(var i=0;i<vetorcampos.length;i++){
-    //             if(vetorcampos[i] == 79){
-    //                 if(linha[vetorcampos[i]] == '1') sintomas.push(1,0)
-    //                 else if(linha[vetorcampos[i]] == '2') sintomas.push(0,1)
-    //                 else if(linha[vetorcampos[i]] == '3') sintomas.push(0,0)
-    //                 else sintomas.push(1,1) //Quando o campo vier vazio
-    //             }else {
-    //                 if(linha[vetorcampos[i]] == '1') sintomas.push(1)
-    //                 else sintomas.push(0)
-    //             }
-    //         }
-            
-    //         CountMortos++
-    //         PacientesMortos.push(sintomas)
-    //     }
-    // }
 }
 
 function sinal(z){
@@ -149,7 +83,7 @@ function Perceptron(X,n,W,Ylinha,b,t){
 } 
 
 function RandomArray(Vivos,Mortos,n){  // Escolhendo aleatóriamente os pacientes
-    let PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
+    PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
 
     let countPacientes = 0
 
@@ -176,9 +110,8 @@ function RandomArray(Vivos,Mortos,n){  // Escolhendo aleatóriamente os paciente
 }
 
 function RunPerceptron(n,t){
+    PacientesTotal = [], PacientesTotalY = []
     // console.clear()
-    console.log('mortosCount = %d', CountMortos)
-    console.log('vivosCount = %d', CountVivos)
     
     RandomArray(PacientesVivos,PacientesMortos,n)
 
@@ -198,7 +131,6 @@ function RunPerceptron(n,t){
     ok = arr[0]
     W = arr[1]
     iteracoes = arr[2]
-
     while(!ok){
         PacientesTotal = [], PacientesTotalY = []
         W = []
@@ -219,8 +151,22 @@ function RunPerceptron(n,t){
     }
 
     console.log("\nO hiperplano foi achado em %d iterações", iteracoes)
-    console.log(`W = ${W}`)
-    console.log(`Tamanho de W = ${W.length}`)
+    console.log(`Hiperplano = ${W}`)
+
+    return iteracoes
+}
+
+function Run(z,n,t){
+    console.log('Quantidade de mortos do banco = %d', CountMortos)
+    console.log('Quantidade de vivos do banco = %d', CountVivos)
+
+    let iteracoes_media = 0
+    for(let i=0;i<z;i++){
+        iteracoes_media += RunPerceptron(n,t)
+
+        console.log(`Rodando o Perceptron pela ${i+1}° vez de ${z} vezes`)
+    }
+    console.log(`\n\nMédia de iterações para um n = ${n} e iteração máxima t = ${t}: ${iteracoes_media/z} iterações`)
 }
 
 var hrstart = process.hrtime()
@@ -230,10 +176,8 @@ fs.createReadStream('ChosenData.csv')
     getSintomas(data)
 })
 .on('end', () => {   //Lógica aplicada quando chega no EOF
-    RunPerceptron(40,1000)
 
-    console.log(PacientesMortos.length)
-    console.log(PacientesVivos.length)
+    Run(10,30,1000);
 
     //Printa quantos pacientes tem uma certa quantidade de campos Preenchidos
     // for(let i=0;i<QntdSintomasPreenchidos.length;i++){
