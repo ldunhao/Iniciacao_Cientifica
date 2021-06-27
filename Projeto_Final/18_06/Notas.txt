@@ -1,0 +1,6 @@
+Pegar o texto do tema da IC (email).
+
+Título, autor, orientador, resumo.
+
+Introdução, objetivos, banco de dados(explicar como separei), linguagem escolhida, implementação, resultados.
+trabalhos futuros(o que se pretende fazer com isso, como melhorar), bibliografia.

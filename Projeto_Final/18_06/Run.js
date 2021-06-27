@@ -19,7 +19,7 @@ async function getSintomas(data){
 
     let sintomas = []
 
-    for(let i=0;i<linha.length;i++){
+    for(let i=0;i<linha.length-1;i++){
         sintomas.push(parseInt(linha[i]))
     }
     
@@ -189,27 +189,39 @@ fs.createReadStream('ChosenData.csv')
     // }
     // console.log(PacientesMortos.length+PacientesVivos.length)
 
-    // let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
-    
-    // for(let i=0;i<X.length;i++){
-    //     let aux = 0
-    //     for(let j=X.length-1; j>0; j--){
-    //         aux += -(W[j]*X[i][j])
-    //     }
-    //     X[i]
-    //     Ylinha[i]
-    //     // console.log(aux)
-    //     aux = (aux + W[0]*B)/W[X.length]
+     let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
+    console.log(W)
+    W = Arr_Hiperplanos[0]
 
-    //     if(aux > X[i][X.length]) {
-    //         console.log(`${Ylinha[i]}`)
-    //         console.log('O paciente está morto')
-    //     }
-    //     else {
-    //         console.log(`${Ylinha[i]}`)
-    //         console.log('O paciente está vivo')
-    //     }
-    // }
+     for(let i=0;i<X.length;i++){
+         let aux = 0
+         for(let j=X[i].length-2; j>0; j--){
+             aux += -(W[j]*X[i][j])
+             //console.log("O valor do aux: %d",aux)
+             //break
+         }
+
+         /*
+        console.log(X[i].length)
+        console.log(W[X[i].length-1])
+        console.log()
+        
+        console.log("W[0]: %d",W[0])
+        console.log("B: %d",B)
+        console.log("X[i].length: %d",X[i].length)
+        console.log("W[X[i].length-1]: %d",W[X[i].length-1])
+        */
+        aux = (aux + W[0]*B)/W[X[i].length-1]
+        
+        console.log("\nAux = %d", aux);
+        if(aux <= Ylinha[i]){
+            console.log(`${Ylinha[i]}`)
+            console.log("Morto")
+        }else {
+            console.log(`${Ylinha[i]}`)
+            console.log("Vivo")
+        }
+    }
 
     //Calculando o tempo de execução do código
     let hrend = process.hrtime(hrstart)
