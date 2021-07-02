@@ -11,6 +11,7 @@ let QntdSintomasPreenchidos = Array(56).fill(0)
 let PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
 let B = 0
 
+let Yteste = []
 let Arr_Hiperplanos = []
 
 async function getSintomas(data){
@@ -44,6 +45,7 @@ function Perceptron(X,n,W,Ylinha,b,t){
 
     var l = 0
     var Y = new Array(n).fill(0)
+    var Yteste = new Array(n).fill(0)
     var tentativas = 0
 
     var ok = true;
@@ -54,6 +56,7 @@ function Perceptron(X,n,W,Ylinha,b,t){
         for(var i = 0;i<n;i++){
             var soma = 0
             for(var j=0;j<d+1;j++) soma += X[i][j] * W[j];
+            Yteste[i] = soma
             Y[i] = sinal(soma)
         }
 
@@ -82,7 +85,10 @@ function Perceptron(X,n,W,Ylinha,b,t){
         }
     }   
 
-    return [ok,W,tentativas]
+    console.log(`Y = ${Y}`)
+    console.log(`Ylinha = ${Ylinha}`)
+
+    return [ok,W,tentativas,Yteste]
 } 
 
 function RandomArray(Vivos,Mortos,n){  // Escolhendo aleatóriamente os pacientes
@@ -134,6 +140,8 @@ function RunPerceptron(n,t){
     ok = arr[0]
     W = arr[1]
     iteracoes = arr[2]
+    Yteste = arr[3]
+
     while(!ok){
         X = [], Ylinha = []
         W = []
@@ -149,9 +157,11 @@ function RunPerceptron(n,t){
         ok = arr[0]
         W = arr[1]
         iteracoes = arr[2]
+        Yteste = arr[3]
 
         if(!ok) console.log("Não achou o Hiperplano")
     }
+
 
     console.log("\nO hiperplano foi achado em %d iterações", iteracoes)
     console.log(`Hiperplano = ${W}`)
@@ -189,39 +199,47 @@ fs.createReadStream('ChosenData.csv')
     // }
     // console.log(PacientesMortos.length+PacientesVivos.length)
 
-     let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
+    let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
     console.log(W)
     W = Arr_Hiperplanos[0]
 
-     for(let i=0;i<X.length;i++){
-         let aux = 0
-         for(let j=X[i].length-2; j>0; j--){
-             aux += -(W[j]*X[i][j])
-             //console.log("O valor do aux: %d",aux)
-             //break
-         }
-
-         /*
-        console.log(X[i].length)
-        console.log(W[X[i].length-1])
-        console.log()
-        
-        console.log("W[0]: %d",W[0])
-        console.log("B: %d",B)
-        console.log("X[i].length: %d",X[i].length)
-        console.log("W[X[i].length-1]: %d",W[X[i].length-1])
-        */
-        aux = (aux + W[0]*B)/W[X[i].length-1]
-        
-        console.log("\nAux = %d", aux);
-        if(aux <= Ylinha[i]){
-            console.log(`${Ylinha[i]}`)
-            console.log("Morto")
-        }else {
-            console.log(`${Ylinha[i]}`)
-            console.log("Vivo")
+    let auxArr = []
+    for(let i=0;i<X.length;i++){
+        let aux = 0
+        for(let j=X[i].length-1; j>=0; j--){
+            aux += W[j]*X[i][j]
+            //console.log("O valor do aux: %d",aux)
+            //break
         }
+
+        // console.log(X[i].length)
+        // console.log(W[X[i].length-1])
+        // console.log()
+        
+        // console.log("W[0]: %d",W[0])
+        // console.log("B: %d",B)
+        // console.log("X[i].length: %d",X[i].length)
+        // console.log("W[X[i].length-1]: %d",W[X[i].length-1])
+        
+       // aux = (aux + W[0]*(X[i][0]))/W[X[i].length-1]
+
+        auxArr.push(aux)
     }
+
+    for(let i=0; i<auxArr.length;i++){
+        console.log(`AuxArr[${i+1}] = ${auxArr[i]}`);
+        console.log(`Ylinha[${i+1}] = ${Ylinha[i]}`);
+        console.log(`Yteste[${i+1}] = ${Yteste[i]}\n`);
+    }
+
+    // console.log("\nAux = %d", aux);
+    // if(aux <= Ylinha[i]){
+    //     console.log(`${Ylinha[i]}`)
+    //     console.log("Morto")
+    // }else {
+    //     console.log(`${Ylinha[i]}`)
+    //     console.log("Vivo")
+    // }
 
     //Calculando o tempo de execução do código
     let hrend = process.hrtime(hrstart)
