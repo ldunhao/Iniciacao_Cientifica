@@ -121,6 +121,9 @@ def Perceptron(X,n,W,Ylinha,b):
 
       if(i>=n or l==0):
         break
+    
+    if(cont % 500 == 0):
+      Plot(W,b)
 
   print(cont)
   return W
