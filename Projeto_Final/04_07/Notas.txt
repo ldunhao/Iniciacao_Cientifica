@@ -1,0 +1,14 @@
+Pegar o texto do tema da IC (email).
+
+Título, autor, orientador, resumo.
+
+Introdução, objetivos, banco de dados(explicar como separei), linguagem escolhida, implementação, resultados.
+trabalhos futuros(o que se pretende fazer com isso, como melhorar), bibliografia.
+
+Gerar um arquivo com os parametros do hiperplano:
+ -> O nome do será o data+hora+n(Número de pacientes).
+ -> Conjunto de pacientes usado para produzir o hiperplano.
+ -> os parametros do hiperplano (W).
+ -> Número de pacientes usados (óbitos + remidos).
+
+calcular o n total de iterações (t * o Número de vezes que não achou o hiperplano + o Número de iterações da vez que achou o hiperplano)
