@@ -111,7 +111,7 @@ function Classificador(){
         let a = 232000
         RandomArray(a)
 
-        let arr = await readFile("HiperplanoEstrategia1",'15/6_20:48:17_60_copy',X.length)
+        let arr = await readFile("HiperplanoParam",'20/7_8:34:17_100',X.length)
 
         const name = arr [0]
         let Wfile = arr[arr.length-4]

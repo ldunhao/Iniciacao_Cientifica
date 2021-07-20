@@ -18,6 +18,10 @@ let WFinal = []
 
 let contTotal = 0
 
+let pacientes = []
+let contObitos = 0
+let contRemidos = 0
+
 let Arr_Hiperplanos = []
 
 async function getSintomas(data){
@@ -187,8 +191,12 @@ function Run(z,n,t){
     console.log(`\n\nMédia de iterações para um n = ${n} e iteração máxima t = ${t}: ${iteracoes_media/z} iterações`)
 }
 
-function TesteDeSanidade(W) {
+function TesteDeSanidade(W,X,Ylinha) {
     let auxArr = []
+
+    contObitos=0
+    contRemidos=0
+
     for(let i=0;i<X.length;i++){
         let aux = 0
         for(let j=X[i].length-1; j>=0; j--){
@@ -197,14 +205,13 @@ function TesteDeSanidade(W) {
         auxArr.push(aux)
     }
 
-    for(let i=0; i<auxArr.length;i++){
 
-        if(sinal(auxArr[i]) == -1){
-            console.log(`Ylinha[i] = ${Ylinha[i]} => sinal de auxArr[i] = ${sinal(auxArr[i])}`)
-            console.log("Morto")
-        }else {
-            console.log(`Ylinha[i] = ${Ylinha[i]} => sinal de auxArr[i] = ${sinal(auxArr[i])}`)
-            console.log("Vivo")
+    for(let i=0; i<auxArr.length;i++){
+        if(Ylinha[i] == -1 && sinal(auxArr[i]) == -1){
+            contObitos++
+        }
+        if(Ylinha[i] == 1 && sinal(auxArr[i]) == 1){
+            contRemidos++
         }
     }
 }
@@ -224,8 +231,10 @@ async function Gerador(){
         // let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
         console.log("Cont total = %d\n", contTotal)
         W = Arr_Hiperplanos[0]
-    
-        writeFile("HiperplanoParam",X,W,X.length)
+        
+        TesteDeSanidade(W,X,Ylinha)
+
+        writeFile("HiperplanoParam",X,W,X.length,contObitos,contRemidos)
     
         //Calculando o tempo de execução do código
         let hrend = process.hrtime(hrstart)
