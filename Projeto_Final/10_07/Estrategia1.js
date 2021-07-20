@@ -231,10 +231,10 @@ async function Gerador(){
         while(ok){
             Xteste = [], YlinhaTeste = []
 
-            let p = 0.30
+            let p = 0.40
             contObitos = 0
             contRemidos = 0
-            Run(1,60,10000);
+            Run(1,100,20000);
     
             // let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
             // console.log("Cont total = %d\n", contTotal)
@@ -250,7 +250,7 @@ async function Gerador(){
             console.log(`\ncontObitos/a: ${contObitos/a}, contRemidos/a: ${contRemidos/a}`)
 
             console.log(++cont)
-            if(contObitos/a >= 0.25 && contRemidos/a >= 0.25){
+            if(contObitos/a >= 0.3 && contRemidos/a >= 0.3){
                 blockName = await writeFile("HiperplanoEstrategia1",X,W,X.length,contObitos,contRemidos)
             }
             if(blockName != "") {

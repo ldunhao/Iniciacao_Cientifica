@@ -1,6 +1,6 @@
 const csv = require('csv-parser');
 const fs = require('fs')
-const { WriteCSV } = require('./WriteCSV');
+const { WriteCSV } = require('./WriteCSV_copy');
 
 // Variáveis Globais
 let PacientesMortos = [], PacientesVivos = []
@@ -219,7 +219,7 @@ var hrstart = process.hrtime()
 fs.createReadStream('Data.csv')
 .pipe(csv({}))
 .on('data', (data) => {  //Lógica aplicada a cada linha
-    getSintomas(data)
+    // getSintomas(data)
 })
 .on('end', () => {   //Lógica aplicada quando chega no EOF
     // RunPerceptron()
