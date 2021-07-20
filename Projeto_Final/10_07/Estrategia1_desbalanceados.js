@@ -13,15 +13,13 @@ let CountMortos = 0, CountVivos = 0
 let X = [], Ylinha = []
 let PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
 let B = 0
-
+let Xteste = [], YlinhaTeste = []
 let WFinal = []
 
 let contTotal = 0
-
 let pacientes = []
 let contObitos = 0
 let contRemidos = 0
-
 let Arr_Hiperplanos = []
 
 async function getSintomas(data){
@@ -99,7 +97,7 @@ function Perceptron(X,n,W,Ylinha,b,t){
     return [ok,W,tentativas,Yteste]
 } 
 
-function RandomArray(n){  // Escolhendo aleatóriamente os pacientes
+function RandomArray(n,X,Ylinha){  // Escolhendo aleatóriamente os pacientes
     PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
 
     let countPacientes = 0
@@ -130,7 +128,7 @@ function RunPerceptron(n,t){
     X = [], Ylinha = []
     // console.clear()
     
-    RandomArray(n)
+    RandomArray(n,X,Ylinha)
 
     //Perceptron
     let W = []
@@ -154,7 +152,7 @@ function RunPerceptron(n,t){
         X = [], Ylinha = []
         W = []
 
-        RandomArray(n)
+        RandomArray(n,X,Ylinha)
 
         for(let i=0;i<X[0].length;i++){
             W.push(1)
@@ -171,24 +169,24 @@ function RunPerceptron(n,t){
     }
 
 
-    console.log("\nO hiperplano foi achado em %d iterações", iteracoes)
-    console.log(`Hiperplano = ${W}`)
+    // console.log("\nO hiperplano foi achado em %d iterações", iteracoes)
+    // console.log(`Hiperplano = ${W}`)
     return [iteracoes,W]
 }
 
 function Run(z,n,t){
-    console.log('Quantidade de mortos do banco = %d', CountMortos)
-    console.log('Quantidade de vivos do banco = %d', CountVivos)
+    // console.log('Quantidade de mortos do banco = %d', CountMortos)
+    // console.log('Quantidade de vivos do banco = %d', CountVivos)
 
     let iteracoes_media = 0
     for(let i=0;i<z;i++){
         let arr = RunPerceptron(n,t)
         iteracoes_media += arr[0]
 
-        console.log(`Rodando o Perceptron pela ${i+1}° vez de ${z} vezes`)
+        // console.log(`Rodando o Perceptron pela ${i+1}° vez de ${z} vezes`)
         Arr_Hiperplanos.push(arr[1])
     }
-    console.log(`\n\nMédia de iterações para um n = ${n} e iteração máxima t = ${t}: ${iteracoes_media/z} iterações`)
+    // console.log(`\n\nMédia de iterações para um n = ${n} e iteração máxima t = ${t}: ${iteracoes_media/z} iterações`)
 }
 
 function TesteDeSanidade(W,X,Ylinha) {
@@ -225,26 +223,81 @@ async function Gerador(){
         getSintomas(data)
     })
     .on('end', async () => {   //Lógica aplicada quando chega no EOF
-    
-        Run(1,100,10000);
-    
-        // let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
-        console.log("Cont total = %d\n", contTotal)
-        W = Arr_Hiperplanos[0]
-        
-        TesteDeSanidade(W,X,Ylinha)
+        console.log('Quantidade de mortos do banco = %d', CountMortos)
+        console.log('Quantidade de vivos do banco = %d', CountVivos)
+        let ok = 1
+        let cont = 0
 
-        writeFile("HiperplanoParam",X,W,X.length,contObitos,contRemidos)
+        while(ok){
+            Xteste = [], YlinhaTeste = []
+
+            let p = 0.40
+            contObitos = 0
+            contRemidos = 0
+            Run(1,60,20000);
     
+            // let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
+            // console.log("Cont total = %d\n", contTotal)
+            let W = Arr_Hiperplanos[Arr_Hiperplanos.length-1]
+        
+            let a = 241380 //Se rodar o ChosenData2021 colocar a = 241380, se for ChosenData a = 232k
+            let blockName = ""
+            let arr = []
+
+            RandomArray(a,Xteste,YlinhaTeste)
+            TesteDeSanidade(W,Xteste,YlinhaTeste)
+
+            console.log(`\ncontObitos/a: ${contObitos/a}, contRemidos/a: ${contRemidos/a}`)
+
+            console.log(++cont)
+            if(contObitos/a >= 0.8){
+                blockName = await writeFile("DesbalanceadosMortos",X,W,X.length,contObitos,contRemidos)
+            }
+            if(contRemidos/a >= 0.8) {
+                blockName = await writeFile("DesbalanceadosVivos",X,W,X.length,contObitos,contRemidos)
+            }
+            
+            if(arr.length != 0){
+                const name = arr [0]
+                let Wfile = arr[arr.length-4]
+                const contObitosfile = arr[arr.length-3]
+                const contRemidosfile = arr[arr.length-2]
+                const N = arr[arr.length-1]
+        
+                let aux = Wfile.split(',')
+                for(let i=0;i<aux.length;i++) aux[i] = Number(aux[i])
+                
+                for(let i=1;i<=N;i++) {
+                    let aux = arr[i].split(',')
+                    for(let i=0;i<aux.length;i++) aux[i] = Number(aux[i])
+                    pacientes.push(aux)
+                }
+        
+                TesteDeSanidade(aux,Xteste,YlinhaTeste)
+        
+                console.log(`W: ${W}`)
+                console.log("Contador de mortos: %d", contObitos)
+                console.log("Contador de remidos: %d", contRemidos)
+                console.log("Soma: %d", contObitos+contRemidos)
+                console.log("A: %d", a)
+            }
+
+            if(contObitos/a >= p && contRemidos/a >=p){
+                console.log("Finalizado")
+                break;
+            }
+        }
+        
+
         //Calculando o tempo de execução do código
         let hrend = process.hrtime(hrstart)
         console.info('\nExecution time (hr): %ds %dms\n', hrend[0], hrend[1] / 1000000)
 
-        WFinal = W
+        // WFinal = W
     }
     )
 
-    return WFinal;
+    // return WFinal;
 }
 
 Gerador()

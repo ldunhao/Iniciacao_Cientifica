@@ -99,7 +99,7 @@ function sinal(z){
 var hrstart = process.hrtime()
 
 function Classificador(){
-    fs.createReadStream('ChosenData.csv')
+    fs.createReadStream('ChosenData2021.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
