@@ -11,7 +11,7 @@ async function getFirstLine(){
     }
     let RemoveItems = [39,40,42,54,55,56]
 
-    let camposadd = [65,69,76,79,80,89,90,95,96,97,98,99,100,101,102,103,104,105,120,131,134,135,136,137,138,139,140,141,142,143,145]
+    let camposadd = [65,69,76,79,80,89,90,95,96,97,98,99,100,101,102,103,104,105,120,124,125,131,134,135,136,137,138,139,140,141,142,143,145]
     
     let Fields = []
 
@@ -30,12 +30,12 @@ async function WriteCSV(Data,Ymortos,Yvivos) {
     let campos = await getFirstLine()
     for(let i=0; i<campos.length ;i++){
         if(i!=campos.length-1){
-            await fs.appendFileSync('ChosenData.csv',`${campos[i]},`,function(err) {
+            await fs.appendFileSync('teste.csv',`${campos[i]},`,function(err) {
                 if(err) throw err;
                 else console.log('Salvou!');
             })
         }else {
-            await fs.appendFileSync('ChosenData.csv',`${campos[i]}\n`,function(err) {
+            await fs.appendFileSync('teste.csv',`${campos[i]}\n`,function(err) {
                 if(err) throw err;
                 else console.log('Salvou!');
             })
@@ -46,18 +46,18 @@ async function WriteCSV(Data,Ymortos,Yvivos) {
     let countVivos = 0
     for(let i=0;i<Data.length;i++){
         for(let j=0;j<Data[i].length;j++){   
-            await fs.appendFileSync('ChosenData.csv',`${Data[i][j]},`,function(err){
+            await fs.appendFileSync('teste.csv',`${Data[i][j]},`,function(err){
                 if(err) throw err;
                 else console.log('Salvou!');
             })
         }
         if(i<Ymortos){
-            await fs.appendFileSync('ChosenData.csv',"Morto\n",function(err) {
+            await fs.appendFileSync('teste.csv',"Morto\n",function(err) {
                 if(err) throw err;
                 else console.log('Salvou!');
             })
         }else{
-            await fs.appendFileSync('ChosenData.csv',"Vivo\n",function(err) {
+            await fs.appendFileSync('teste.csv',"Vivo\n",function(err) {
                 if(err) throw err;
                 else console.log('Salvou!');
             })

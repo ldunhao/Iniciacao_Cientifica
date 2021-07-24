@@ -1,6 +1,6 @@
 const csv = require('csv-parser');
 const fs = require('fs')
-const { WriteCSV } = require('./WriteCSV_copy');
+const { WriteCSV } = require('./24_07_WriteCSV');
 
 // Variáveis Globais
 let PacientesMortos = [], PacientesVivos = []
@@ -23,7 +23,7 @@ async function getSintomas(data){
     
     let vetorcampos = []
     
-    let camposadd = [65,69,76,79,89,90,95,96,97,98,99,100,101,102,103,104,105,120,131,134,135,136,137,138,139,140,141,142,143,145]
+    let camposadd = [65,69,76,79,80,89,90,95,96,97,98,99,100,101,102,103,104,105,120,124,125,131,134,135,136,137,138,139,140,141,142,143,145]
     
     //Sintomas que o paciente vai ter
     for(var i=28;i<58;i++){
@@ -51,13 +51,22 @@ async function getSintomas(data){
         if(linha[110] == '1'){ //Se o paciente estiver vivo
             for(var i=0;i<vetorcampos.length;i++){
                 if(vetorcampos[i] == 79){
-                    if(linha[vetorcampos[i]] == '1') sintomas.push(1,0)
-                    else if(linha[vetorcampos[i]] == '2') sintomas.push(0,1)
-                    else if(linha[vetorcampos[i]] == '3') sintomas.push(0,0)
-                    else sintomas.push(1,1) //Quando o campo vier vazio
+                    if(linha[vetorcampos[i]] == '1') sintomas.push(1,1,1)
+                    else if(linha[vetorcampos[i]] == '2') sintomas.push(1,1,0)
+                    else if(linha[vetorcampos[i]] == '3') sintomas.push(0,0,1)
+                    else sintomas.push(0,0,0) //Quando o campo vier vazio
+                }else if(vetorcampos[i] == 80){
+                    if(linha[vetorcampos[i]] == '1') sintomas.push(0,1,1)
+                    else if(linha[vetorcampos[i]] == '2') sintomas.push(1,1,1)
+                    else if(linha[vetorcampos[i]] == '3') sintomas.push(1,0,1)
+                    else if(linha[vetorcampos[i]] == '4') sintomas.push(1,1,0)
+                    else if(linha[vetorcampos[i]] == '5') sintomas.push(0,1,0)
+                    else if(linha[vetorcampos[i]] == '6') sintomas.push(0,0,1)
+                    else sintomas.push(0,0,0)
                 }else {
-                    if(linha[vetorcampos[i]] == '1') sintomas.push(1)
-                    else sintomas.push(0)
+                    if(linha[vetorcampos[i]] == '1') sintomas.push(1,1)
+                    else if(linha[vetorcampos[i]] == '2') sintomas.push(1,0)
+                    else sintomas.push(0,0)
                 }
             }
             CountVivos++
@@ -66,13 +75,22 @@ async function getSintomas(data){
         else if(linha[110] == '2'){ //Se o paciente estiver morto
             for(var i=0;i<vetorcampos.length;i++){
                 if(vetorcampos[i] == 79){
-                    if(linha[vetorcampos[i]] == '1') sintomas.push(1,0)
-                    else if(linha[vetorcampos[i]] == '2') sintomas.push(0,1)
-                    else if(linha[vetorcampos[i]] == '3') sintomas.push(0,0)
-                    else sintomas.push(1,1) //Quando o campo vier vazio
+                    if(linha[vetorcampos[i]] == '1') sintomas.push(1,1,1)
+                    else if(linha[vetorcampos[i]] == '2') sintomas.push(1,1,0)
+                    else if(linha[vetorcampos[i]] == '3') sintomas.push(0,0,1)
+                    else sintomas.push(0,0,0) //Quando o campo vier vazio
+                }else if(vetorcampos[i] == 80){
+                    if(linha[vetorcampos[i]] == '1') sintomas.push(0,1,1)
+                    else if(linha[vetorcampos[i]] == '2') sintomas.push(1,1,1)
+                    else if(linha[vetorcampos[i]] == '3') sintomas.push(1,0,1)
+                    else if(linha[vetorcampos[i]] == '4') sintomas.push(1,1,0)
+                    else if(linha[vetorcampos[i]] == '5') sintomas.push(0,1,0)
+                    else if(linha[vetorcampos[i]] == '6') sintomas.push(0,0,1)
+                    else sintomas.push(0,0,0)
                 }else {
-                    if(linha[vetorcampos[i]] == '1') sintomas.push(1)
-                    else sintomas.push(0)
+                    if(linha[vetorcampos[i]] == '1') sintomas.push(1,1)
+                    else if(linha[vetorcampos[i]] == '2') sintomas.push(1,0)
+                    else sintomas.push(0,0)
                 }
             }
             
@@ -216,19 +234,15 @@ function RunPerceptron(){
 }
 
 var hrstart = process.hrtime()
-fs.createReadStream('zData.csv')
+fs.createReadStream('ExDataShort.csv')
 .pipe(csv({}))
 .on('data', (data) => {  //Lógica aplicada a cada linha
-    // getSintomas(data)
+    getSintomas(data)
 })
 .on('end', () => {   //Lógica aplicada quando chega no EOF
-    // RunPerceptron()
-
-    //Printa quantos pacientes tem uma certa quantidade de campos Preenchidos
-    // for(let i=0;i<QntdSintomasPreenchidos.length;i++){
-    //     console.log("Tem %d pacientes com %d campos Preenchidos",QntdSintomasPreenchidos[i],i)
-    // }
-    // console.log(PacientesMortos.length+PacientesVivos.length)
+    RunPerceptron()
+    console.log(PacientesTotal[0].length)
+    console.log(PacientesTotalY[0].length)
     WriteCSV(PacientesMortos.concat(PacientesVivos),PacientesMortos.length,PacientesVivos.length);
 
     //Calculando o tempo de execução do código

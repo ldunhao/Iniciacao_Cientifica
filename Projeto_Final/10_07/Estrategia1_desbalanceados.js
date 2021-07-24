@@ -250,10 +250,10 @@ async function Gerador(){
             console.log(`\ncontObitos/a: ${contObitos/a}, contRemidos/a: ${contRemidos/a}`)
 
             console.log(++cont)
-            if(contObitos/a >= 0.8){
+            if(contObitos/a >= 0.4){
                 blockName = await writeFile("DesbalanceadosMortos",X,W,X.length,contObitos,contRemidos)
             }
-            if(contRemidos/a >= 0.8) {
+            if(contRemidos/a >= 0.4) {
                 blockName = await writeFile("DesbalanceadosVivos",X,W,X.length,contObitos,contRemidos)
             }
             
