@@ -217,7 +217,7 @@ function TesteDeSanidade(W,X,Ylinha) {
 var hrstart = process.hrtime()
 
 async function Gerador(){
-    await fs.createReadStream('ChosenData2021.csv')
+    await fs.createReadStream('ChosenData.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -240,7 +240,7 @@ async function Gerador(){
             // console.log("Cont total = %d\n", contTotal)
             let W = Arr_Hiperplanos[Arr_Hiperplanos.length-1]
         
-            let a = 241380 //Se rodar o ChosenData2021 colocar a = 241380, se for ChosenData a = 232k
+            let a = 232000 //Se rodar o ChosenData2021 colocar a = 241380, se for ChosenData a = 232k
             let blockName = ""
             let arr = []
 
@@ -253,7 +253,7 @@ async function Gerador(){
             if(contObitos/a >= 0.4){
                 blockName = await writeFile("DesbalanceadosMortos",X,W,X.length,contObitos,contRemidos)
             }
-            if(contRemidos/a >= 0.4) {
+            if(contRemidos/a >= 0.35) {
                 blockName = await writeFile("DesbalanceadosVivos",X,W,X.length,contObitos,contRemidos)
             }
             

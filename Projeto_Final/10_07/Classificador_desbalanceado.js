@@ -10,17 +10,16 @@ const { readFile } = require('./ReadFile')
 let PacientesMortos = [], PacientesVivos = []
 let CountMortos = 0, CountVivos = 0
 
-let CamposNomes = []
 let X = [], Ylinha = []
-let QntdSintomasPreenchidos = Array(56).fill(0)
 let PacientesVivosEscolhidos = [], PacientesMortosEscolhidos = []
 let B = 0
+
+let Vivos = []
+let Mortos = []
 
 let contObitos = 0
 let contRemidos = 0
 let pacientes = []
-let Yteste = []
-let Arr_Hiperplanos = []
 
 async function getSintomas(data){
     // let campos = Object.keys(data).toString().split(',')
@@ -66,7 +65,9 @@ function RandomArray(n){  // Escolhendo aleatóriamente os pacientes
     }
 }
 
-function TesteDeSanidade(W) {
+function TesteDeSanidade(X,W) {
+    contObitos=0
+    contRemidos=0
     let auxArr = []
 
     for(let i=0;i<X.length;i++){
@@ -79,11 +80,13 @@ function TesteDeSanidade(W) {
 
 
     for(let i=0; i<auxArr.length;i++){
-        if(Ylinha[i] == -1 && sinal(auxArr[i]) == -1){
+        if(sinal(auxArr[i]) == -1){
             contObitos++
+            Mortos.push(X[i])
         }
-        if(Ylinha[i] == 1 && sinal(auxArr[i]) == 1){
+        if(sinal(auxArr[i]) == 1){
             contRemidos++
+            Vivos.push(X[i])
         }
     }
 }
@@ -111,13 +114,13 @@ function Classificador(){
         let a = 232000
         RandomArray(a)
 
-        let arr = await readFile("DesbalanceadosMortos",'26/7_14:29:46_60',X.length)
+        let arr = await readFile("HiperplanoEstrategia1",'16/6_16:22:41_60',X.length)
 
-        const name = arr [0]
+        let name = arr [0]
         let Wfile = arr[arr.length-4]
-        const contObitosfile = arr[arr.length-3]
-        const contRemidosfile = arr[arr.length-2]
-        const N = arr[arr.length-1]
+        let contObitosfile = arr[arr.length-3]
+        let contRemidosfile = arr[arr.length-2]
+        let N = arr[arr.length-1]
 
         let aux = Wfile.split(',')
         for(let i=0;i<aux.length;i++) aux[i] = Number(aux[i])
@@ -128,12 +131,51 @@ function Classificador(){
             pacientes.push(aux)
         }
 
-        TesteDeSanidade(aux)
+        TesteDeSanidade(X,aux)
+        
+        console.log("Contador de mortos: %d", contObitos)
+        console.log("Contador de remidos: %d", contRemidos)
+        console.log("Soma: %d", contObitos+contRemidos)
+        console.log("A: %d\n", a)
+
+        arr = await readFile("HiperplanoEstrategia1",'16/6_11:45:53_60',X.length)
+
+        
+        name = arr [0]
+        
+        Wfile = arr[arr.length-4]
+        
+        contObitosfile = arr[arr.length-3]
+        
+        contRemidosfile = arr[arr.length-2]
+        
+        N = arr[arr.length-1]
+
+        
+        aux = Wfile.split(',')
+        for(let i=0;i<aux.length;i++) aux[i] = Number(aux[i])
+        
+        for(let i=1;i<=N;i++) {
+            let aux = arr[i].split(',')
+            for(let i=0;i<aux.length;i++) aux[i] = Number(aux[i])
+            pacientes.push(aux)
+        }
+
+        TesteDeSanidade(Mortos,aux)
+        // let blockName = await writeFile('File1',Vivos,aux,Vivos.length,contObitos,contRemidos)
+        // blockName = await writeFile('File2',Mortos,aux,Mortos.length,contObitos,contRemidos)
 
         console.log("Contador de mortos: %d", contObitos)
         console.log("Contador de remidos: %d", contRemidos)
         console.log("Soma: %d", contObitos+contRemidos)
+        console.log("A: %d\n", a)
+
+        TesteDeSanidade(Vivos,aux)
+        console.log("Contador de mortos: %d", contObitos)
+        console.log("Contador de remidos: %d", contRemidos)
+        console.log("Soma: %d", contObitos+contRemidos)
         console.log("A: %d", a)
+
 
         //Calculando o tempo de execução do código
         let hrend = process.hrtime(hrstart)
