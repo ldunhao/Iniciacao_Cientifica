@@ -217,7 +217,7 @@ function TesteDeSanidade(W,X,Ylinha) {
 var hrstart = process.hrtime()
 
 async function Gerador(){
-    await fs.createReadStream('ChosenData.csv')
+    await fs.createReadStream('BancoTeste16.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -240,7 +240,7 @@ async function Gerador(){
             // console.log("Cont total = %d\n", contTotal)
             let W = Arr_Hiperplanos[Arr_Hiperplanos.length-1]
         
-            let a = 232000
+            let a = 338460
             let blockName = ""
             let arr = []
 
