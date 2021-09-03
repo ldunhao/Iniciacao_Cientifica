@@ -234,7 +234,7 @@ async function Gerador(){
             let p = 0.4
             contObitos = 0
             contRemidos = 0
-            Run(1,100,20000);
+            Run(1,30,20000);
     
             // let W = Math.floor(Math.random() * Arr_Hiperplanos.length)
             // console.log("Cont total = %d\n", contTotal)
