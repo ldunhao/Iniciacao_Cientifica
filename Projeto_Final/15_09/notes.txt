@@ -1,0 +1,35 @@
+-----------
+5, 9, 16, 22, 26, 3, 4. balanceado2
+
+Quantidade de mortos do banco = 169230
+Quantidade de vivos do banco = 271685
+
+
+Qtd. de hiperplanos =  7
+AcertoV =  122466
+ErroV =  50581
+AcertoM =  118649
+ErroM =  46764
+
+Execution time (hr): 497s 885.265087ms
+-----------
+
+
+-----------
+2, 5, 6, 9, 11, 16, 19, 26. - balanceado3
+
+Quantidade de mortos do banco = 169230
+Quantidade de vivos do banco = 271685
+
+
+Qtd. de hiperplanos =  8
+AcertoV =  136309
+ErroV =  60290
+AcertoM =  108940
+ErroM =  32921
+
+Execution time (hr): 510s 646.406658ms
+-----------
+
+Rodar o Estrategia1 para o banco de 2020 / 2021 e Total para 35_33
+testar cruzado

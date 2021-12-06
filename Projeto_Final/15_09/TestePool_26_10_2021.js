@@ -5,6 +5,7 @@ const readLine = require("readline")
 
 //const { writeFile } = require('./WriteFile')
 const { RandomArray } = require('./Utils/RandomArray')
+const { RandomArrayTotal } = require('./Utils/RandomArrayTotal')
 const { readFile } = require('./Utils/ReadFile')
 const { Conta } = require('./Utils/Conta')
 
@@ -46,19 +47,19 @@ function TestePool(){
         //268290_20
         let a = 338460
 
-        const respRandomArray = RandomArray(a,X,Ylinha,PacientesVivos,PacientesMortos)
+        const respRandomArray = RandomArrayTotal(X,Ylinha,PacientesVivos,PacientesMortos)
         X = respRandomArray[0]
         Ylinha = respRandomArray[1]
 
         let Hpidx = 1
-        let qtdHiperplanos = 12
+        let qtdHiperplanos = 5
         for(let i = 0; i<X.length; i++){
             let arrH_i = []
             let vivo = 0, morto = 0
             //Hpidx == qtd hiperplanos
             
-            for(Hpidx = 1; Hpidx<=12;Hpidx++){
-                let arr = await readFile('Hiperplanos/teste',`Hiperplano${Hpidx}`,X.length)
+            for(Hpidx = 1; Hpidx<=5;Hpidx++){
+                let arr = await readFile('Hiperplanos/poolHP2021_35_33',`Hiperplano${Hpidx}`,X.length)
                 let hiperplano = arr[1]
                 
                 hiperplano = hiperplano.split(',')

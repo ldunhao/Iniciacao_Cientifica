@@ -15,7 +15,7 @@ let CountMortos = 0, CountVivos = 0
 let X = [], Ylinha = []
 let B = 0
 let Xteste = [], YlinhaTeste = []
-let numHiperplanoPool = 2
+let numHiperplanoPool = 1
 
 let contObitos = 0
 let contRemidos = 0
@@ -37,7 +37,7 @@ async function getSintomas(data){
 var hrstart = process.hrtime()
 
 async function Gerador(){
-    await fs.createReadStream('BancoTratado2021_16_08_21.csv')
+    await fs.createReadStream('BancoTratadoTotal.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -58,7 +58,7 @@ async function Gerador(){
     
             let W = Arr_Hiperplanos[Arr_Hiperplanos.length-1]
             // 338460
-            let a = 200000
+            let a = 600000
             let blockName = ""
             let arr = []
 
@@ -73,12 +73,12 @@ async function Gerador(){
             console.log(`\ncontObitos/a: ${contObitos/a}, contRemidos/a: ${contRemidos/a}`)
             console.log(++cont)
 
-            if(contObitos/a >= 0.35 && contRemidos/a >= 0.35){
-                blockName = await WriteFileTestePool("Hiperplanos/teste",numHiperplanoPool,W,Xteste.length,contObitos,contRemidos)
+            if(contObitos/a >= 0.33 && contRemidos/a >= 0.31){
+                blockName = await WriteFileTestePool("Hiperplanos/poolHPTotal_35_33",numHiperplanoPool,W,Xteste.length,contObitos,contRemidos)
                 numHiperplanoPool++
             }
             if(blockName != "") {
-                arr = await readFile("Hiperplanos/teste",blockName)
+                arr = await readFile("Hiperplanos/poolHPTotal_35_33",blockName)
             }
             
             if(arr.length != 0){
