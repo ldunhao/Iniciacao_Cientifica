@@ -33,3 +33,35 @@ Execution time (hr): 510s 646.406658ms
 
 Rodar o Estrategia1 para o banco de 2020 / 2021 e Total para 35_33
 testar cruzado
+
+TestePool:
+    hiperplanos do banco total para o banco de 2021:
+
+    Quantidade de mortos do banco = 169230
+    Quantidade de vivos do banco = 271685
+
+
+    Qtd. de hiperplanos =  4
+    AcertoV =  215350
+    ErroV =  63628
+    AcertoM =  105602
+    ErroM =  56335
+
+    Execution time (hr): 243s 317.715258ms
+    #############################################
+
+
+    hiperplanos do banco 2021 para o banco de 2020:
+    
+    Quantidade de mortos do banco = 134145
+    Quantidade de vivos do banco = 249712
+
+
+    Qtd. de hiperplanos =  5
+    AcertoV =  2083
+    ErroV =  1521
+    AcertoM =  132624
+    ErroM =  247629
+
+    Execution time (hr): 257s 800.505351ms
+    #############################################
