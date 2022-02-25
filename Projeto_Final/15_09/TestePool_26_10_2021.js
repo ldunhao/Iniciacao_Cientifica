@@ -52,16 +52,15 @@ function TestePool(){
         Ylinha = respRandomArray[1]
 
         let Hpidx = 1
-        let qtdHiperplanos = 5
+        let qtdHiperplanos = 10
         for(let i = 0; i<X.length; i++){
             let arrH_i = []
             let vivo = 0, morto = 0
             //Hpidx == qtd hiperplanos
             
-            for(Hpidx = 1; Hpidx<=5;Hpidx++){
-                let arr = await readFile('Hiperplanos/poolHP2021_35_33',`Hiperplano${Hpidx}`,X.length)
+            for(Hpidx = 1; Hpidx<=qtdHiperplanos;Hpidx++){
+                let arr = await readFile('Hiperplanos/poolHPMista_10',`Hiperplano${Hpidx}`,X.length)
                 let hiperplano = arr[1]
-                
                 hiperplano = hiperplano.split(',')
 
                 for(let k=0;k<hiperplano.length-1;k++){

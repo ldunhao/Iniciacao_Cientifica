@@ -37,7 +37,7 @@ async function getSintomas(data){
 var hrstart = process.hrtime()
 
 async function Gerador(){
-    await fs.createReadStream('BancoTratadoTotal.csv')
+    await fs.createReadStream('BancoTratado2021_16_08_21.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -45,6 +45,7 @@ async function Gerador(){
     .on('end', async () => {   //Lógica aplicada quando chega no EOF
         console.log('Quantidade de mortos do banco = %d', CountMortos)
         console.log('Quantidade de vivos do banco = %d', CountVivos)
+        console.log(date)
         let ok = 1
         let cont = 0
 
@@ -58,7 +59,7 @@ async function Gerador(){
     
             let W = Arr_Hiperplanos[Arr_Hiperplanos.length-1]
             // 338460
-            let a = 600000
+            let a = 200000
             let blockName = ""
             let arr = []
 
@@ -74,15 +75,16 @@ async function Gerador(){
             console.log(++cont)
 
             if(contObitos/a >= 0.33 && contRemidos/a >= 0.31){
-                blockName = await WriteFileTestePool("Hiperplanos/poolHPTotal_35_33",numHiperplanoPool,W,Xteste.length,contObitos,contRemidos)
+                blockName = await WriteFileTestePool("Hiperplanos/poolHP2021_35_33",numHiperplanoPool,W,Xteste.length,contObitos,contRemidos,date)
                 numHiperplanoPool++
             }
             if(blockName != "") {
-                arr = await readFile("Hiperplanos/poolHPTotal_35_33",blockName)
+                arr = await readFile("Hiperplanos/poolHP2021_35_33",blockName)
             }
             
             if(arr.length != 0){
                 let Wfile = arr[1].split(',')
+                const tempoHiperplano = arr[arr.length - 1]
         
                 for(let i=0;i<Wfile.length;i++) Wfile[i] = Number(Wfile[i])
         
@@ -95,6 +97,7 @@ async function Gerador(){
                 console.log("Contador de remidos: %d", contRemidos)
                 console.log("Soma: %d", contObitos+contRemidos)
                 console.log("A: %d", a)
+                console.log(`Tempo até achar o hiperplano: ${tempoHiperplano}`)
             }
 
             if(contObitos/a >= p && contRemidos/a >=p){
@@ -115,6 +118,7 @@ async function Gerador(){
     // return WFinal;
 }
 
+const date = Date.now()
 Gerador()
 
 module.exports = {
