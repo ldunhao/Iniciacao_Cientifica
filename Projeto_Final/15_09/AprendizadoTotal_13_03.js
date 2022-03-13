@@ -10,10 +10,11 @@ const { readFile } = require('./Utils/ReadFile')
 
 // Variáveis Globais
 let PacientesMortos = [], PacientesVivos = []
+let PacientesMortos2021 = [], PacientesVivos2021 =[]
+let PacientesMortos2020 = [], PacientesVivos2020 =[]
 let CountMortos = 0, CountVivos = 0
 
-let X = [], Ylinha = []
-let B = 0
+let Contador = 0
 let Xteste = [], YlinhaTeste = []
 let numHiperplanoPool = 1
 
@@ -30,8 +31,22 @@ async function getSintomas(data){
         sintomas.push(parseInt(linha[i]))
     }
     
-    if(linha[linha.length-1] == "Vivo")PacientesVivos.push(sintomas), CountVivos++;
-    else PacientesMortos.push(sintomas), CountMortos++;
+    if(linha[linha.length-1] == "Vivo") {
+        if(++Contador <= 440915) {
+            PacientesVivos2021.push(sintomas)
+        } else {
+            PacientesVivos2020.push(sintomas); 
+        }
+        PacientesVivos.push(sintomas), CountVivos++;
+    }
+    else {
+        if(++Contador <= 440915) {
+            PacientesMortos2021.push(sintomas)
+        }else {
+            PacientesMortos2020.push(sintomas)
+        }
+        PacientesMortos.push(sintomas), CountMortos++;
+    }
 }
 
 var hrstart = process.hrtime()
@@ -45,7 +60,10 @@ async function Gerador(){
     .on('end', async () => {   //Lógica aplicada quando chega no EOF
         console.log('Quantidade de mortos do banco = %d', CountMortos)
         console.log('Quantidade de vivos do banco = %d', CountVivos)
-        console.log(date)
+        console.log('Quantidade de vivos do banco 2021 = %d', PacientesVivos2021.length)
+        console.log('Quantidade de vivos do banco 2020 = %d', PacientesVivos2020.length)
+        console.log('Quantidade de mortos do banco 2021 = %d', PacientesMortos2021.length)
+        console.log('Quantidade de mortos do banco 2020 = %d', PacientesMortos2020.length)
         let ok = 1
         let cont = 0
 

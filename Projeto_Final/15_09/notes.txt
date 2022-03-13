@@ -96,6 +96,42 @@ TestePool:
     Execution time (hr): 291s 525.577607ms
 
     #############################################
+
+    #############################################
+
+    hiperplanos do banco 2020 para o banco de 2021:
+
+    Quantidade de mortos do banco = 169230
+    Quantidade de vivos do banco = 271685
+
+
+    Qtd. de hiperplanos =  19
+    AcertoV =  0
+    ErroV =  0
+    AcertoM =  169230
+    ErroM =  271685
+
+    Execution time (hr): 2281s 279.27024ms
+
+    #############################################
+
+    #############################################
+
+    hiperplanos do banco Total para o banco de 2021:
+
+    Quantidade de mortos do banco = 169230
+    Quantidade de vivos do banco = 271685
+
+
+    Qtd. de hiperplanos =  10
+    AcertoV =  199974
+    ErroV =  47948
+    AcertoM =  121282
+    ErroM =  71711
+
+    Execution time (hr): 808s 554.803476ms
+
+    #############################################
     
 
 #############################################

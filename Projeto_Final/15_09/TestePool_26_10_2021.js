@@ -35,7 +35,7 @@ async function getSintomas(data){
 var hrstart = process.hrtime()
 
 function TestePool(){
-    fs.createReadStream('BancoTratado2021_16_08_21.csv')
+    fs.createReadStream('BancoTratado2020_29_08_21.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -45,21 +45,21 @@ function TestePool(){
         console.log('Quantidade de vivos do banco = %d\n\n', CountVivos)
         //338460_21
         //268290_20
-        let a = 338460
+        let a = 268290
 
         const respRandomArray = RandomArrayTotal(X,Ylinha,PacientesVivos,PacientesMortos)
         X = respRandomArray[0]
         Ylinha = respRandomArray[1]
 
         let Hpidx = 1
-        let qtdHiperplanos = 10
+        let qtdHiperplanos = 19
         for(let i = 0; i<X.length; i++){
             let arrH_i = []
             let vivo = 0, morto = 0
             //Hpidx == qtd hiperplanos
             
             for(Hpidx = 1; Hpidx<=qtdHiperplanos;Hpidx++){
-                let arr = await readFile('Hiperplanos/poolHPMista_10',`Hiperplano${Hpidx}`,X.length)
+                let arr = await readFile('Hiperplanos/poolHP2021_35_33',`Hiperplano${Hpidx}`,X.length)
                 let hiperplano = arr[1]
                 hiperplano = hiperplano.split(',')
 
