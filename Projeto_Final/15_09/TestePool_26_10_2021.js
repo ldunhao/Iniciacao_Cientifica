@@ -7,7 +7,8 @@ const readLine = require("readline")
 const { RandomArray } = require('./Utils/RandomArray')
 const { RandomArrayTotal } = require('./Utils/RandomArrayTotal')
 const { readFile } = require('./Utils/ReadFile')
-const { Conta } = require('./Utils/Conta')
+const { Conta } = require('./Utils/Conta');
+const { FormatData } = require('./Utils/FormatData');
 
 // Variáveis Globais
 let PacientesMortos = [], PacientesVivos = []
@@ -42,7 +43,8 @@ function TestePool(){
     })
     .on('end', async () => {   //Lógica aplicada quando chega no EOF
         console.log('Quantidade de mortos do banco = %d', CountMortos)
-        console.log('Quantidade de vivos do banco = %d\n\n', CountVivos)
+        console.log('Quantidade de vivos do banco = %d', CountVivos)
+        console.log(`Iniciado em ${FormatData(date)}\n\n`)
         //338460_21
         //268290_20
         let a = 268290
@@ -59,7 +61,7 @@ function TestePool(){
             //Hpidx == qtd hiperplanos
             
             for(Hpidx = 1; Hpidx<=qtdHiperplanos;Hpidx++){
-                let arr = await readFile('Hiperplanos/poolHP2021_35_33',`Hiperplano${Hpidx}`,X.length)
+                let arr = await readFile('Hiperplanos/poolHP2020_35_33',`Hiperplano${Hpidx}`,X.length)
                 let hiperplano = arr[1]
                 hiperplano = hiperplano.split(',')
 
@@ -107,7 +109,9 @@ function TestePool(){
     return [AcertoV,ErroV,AcertoM,ErroM]
 }
 
+const date = Date.now()
 TestePool()
+
 module.exports = {
     TestePool
 }

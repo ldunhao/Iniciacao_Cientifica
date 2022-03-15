@@ -6,7 +6,8 @@ const { Run } = require('./Utils/Run')
 const { TesteDeSanidade } = require('./Utils/TesteDeSanidade')
 const { RandomArray } = require('./Utils/RandomArray')
 const { WriteFileTestePool } = require('./Utils/WriteFileTestePool')
-const { readFile } = require('./Utils/ReadFile')
+const { readFile } = require('./Utils/ReadFile');
+const { FormatData } = require('./Utils/FormatData');
 
 // Variáveis Globais
 let PacientesMortos = [], PacientesVivos = []
@@ -60,6 +61,8 @@ async function Gerador(){
     .on('end', async () => {   //Lógica aplicada quando chega no EOF
         console.log('Quantidade de mortos do banco = %d', CountMortos)
         console.log('Quantidade de vivos do banco = %d', CountVivos)
+        console.log(`Iniciado em ${FormatData(date)}\n\n`)
+
         console.log('Quantidade de vivos do banco 2021 = %d', PacientesVivos2021.length)
         console.log('Quantidade de vivos do banco 2020 = %d', PacientesVivos2020.length)
         console.log('Quantidade de mortos do banco 2021 = %d', PacientesMortos2021.length)

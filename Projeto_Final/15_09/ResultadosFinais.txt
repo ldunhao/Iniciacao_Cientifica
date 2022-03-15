@@ -51,3 +51,58 @@ ErroM =  245113
 Execution time (hr): 685s 153.226594ms
 
 #############################################
+
+#############################################
+
+hiperplanos do 2021 para o banco de 2020:
+
+Quantidade de mortos do banco = 134145
+Quantidade de vivos do banco = 249712
+
+
+Qtd. de hiperplanos =  19
+AcertoV =  559
+ErroV =  289
+AcertoM =  133856
+ErroM =  249153
+
+Execution time (hr): 1943s 32.939235ms
+
+#############################################
+
+#############################################
+
+hiperplanos do 2021 para o banco de 2021:
+
+Quantidade de mortos do banco = 169230
+Quantidade de vivos do banco = 271685
+
+
+Qtd. de hiperplanos =  19
+AcertoV =  200768
+ErroV =  45744
+AcertoM =  123486
+ErroM =  70917
+
+Execution time (hr): 2310s 54.353256ms
+
+#############################################
+
+#############################################
+
+hiperplanos do 2020 para o banco de 2020:
+
+Quantidade de mortos do banco = 134145
+Quantidade de vivos do banco = 249712
+Iniciado em 14/03/2022 21:2:47
+
+
+Qtd. de hiperplanos =  19
+AcertoV =  188721
+ErroV =  40647
+AcertoM =  93498
+ErroM =  60991
+
+Execution time (hr): 1600s 783.896489ms
+
+#############################################
