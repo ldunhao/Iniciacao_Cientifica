@@ -11,11 +11,10 @@ const { FormatData } = require('./Utils/FormatData');
 
 // Variáveis Globais
 let PacientesMortos = [], PacientesVivos = []
-let PacientesMortos2021 = [], PacientesVivos2021 =[]
-let PacientesMortos2020 = [], PacientesVivos2020 =[]
 let CountMortos = 0, CountVivos = 0
 
-let Contador = 0
+let X = [], Ylinha = []
+let B = 0
 let Xteste = [], YlinhaTeste = []
 let numHiperplanoPool = 1
 
@@ -32,28 +31,14 @@ async function getSintomas(data){
         sintomas.push(parseInt(linha[i]))
     }
     
-    if(linha[linha.length-1] == "Vivo") {
-        if(++Contador <= 440915) {
-            PacientesVivos2021.push(sintomas)
-        } else {
-            PacientesVivos2020.push(sintomas); 
-        }
-        PacientesVivos.push(sintomas), CountVivos++;
-    }
-    else {
-        if(++Contador <= 440915) {
-            PacientesMortos2021.push(sintomas)
-        }else {
-            PacientesMortos2020.push(sintomas)
-        }
-        PacientesMortos.push(sintomas), CountMortos++;
-    }
+    if(linha[linha.length-1] == "Vivo")PacientesVivos.push(sintomas), CountVivos++;
+    else PacientesMortos.push(sintomas), CountMortos++;
 }
 
 var hrstart = process.hrtime()
 
 async function Gerador(){
-    await fs.createReadStream('BancosTratados/BancoTratadoTotal.csv')
+    await fs.createReadStream('BancosTratados/BancoTratado2020_29_08_21.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -62,11 +47,7 @@ async function Gerador(){
         console.log('Quantidade de mortos do banco = %d', CountMortos)
         console.log('Quantidade de vivos do banco = %d', CountVivos)
         console.log(`Iniciado em ${FormatData(date)}\n\n`)
-
-        console.log('Quantidade de vivos do banco 2021 = %d', PacientesVivos2021.length)
-        console.log('Quantidade de vivos do banco 2020 = %d', PacientesVivos2020.length)
-        console.log('Quantidade de mortos do banco 2021 = %d', PacientesMortos2021.length)
-        console.log('Quantidade de mortos do banco 2020 = %d', PacientesMortos2020.length)
+        
         let ok = 1
         let cont = 0
 
@@ -79,8 +60,7 @@ async function Gerador(){
             Arr_Hiperplanos = Run(1,30,10000,PacientesVivos,PacientesMortos);
     
             let W = Arr_Hiperplanos[Arr_Hiperplanos.length-1]
-            // 338460
-            let a = 600000
+            let a = 268290
             let blockName = ""
             let arr = []
 
@@ -96,11 +76,11 @@ async function Gerador(){
             console.log(++cont)
 
             if(contObitos/a >= 0.33 && contRemidos/a >= 0.31){
-                blockName = await WriteFileTestePool("Hiperplanos/poolHPTotal_35_33",numHiperplanoPool,W,Xteste.length,contObitos,contRemidos,date)
+                blockName = await WriteFileTestePool("Hiperplanos/poolHP2020_35_33",numHiperplanoPool,W,Xteste.length,contObitos,contRemidos,date)
                 numHiperplanoPool++
             }
             if(blockName != "") {
-                arr = await readFile("Hiperplanos/poolHPTotal_35_33",blockName)
+                arr = await readFile("Hiperplanos/poolHP2020_35_33",blockName)
             }
             
             if(arr.length != 0){
