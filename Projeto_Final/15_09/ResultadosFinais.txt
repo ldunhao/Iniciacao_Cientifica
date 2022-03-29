@@ -94,15 +94,15 @@ hiperplanos do 2020 para o banco de 2020:
 
 Quantidade de mortos do banco = 134145
 Quantidade de vivos do banco = 249712
-Iniciado em 14/03/2022 21:2:47
+Iniciado em 28/03/2022 21:26:40
 
 
-Qtd. de hiperplanos =  19
-AcertoV =  188721
-ErroV =  40647
-AcertoM =  93498
-ErroM =  60991
+Qtd. de hiperplanos =  25
+AcertoV =  186540
+ErroV =  39596
+AcertoM =  94549
+ErroM =  63172
 
-Execution time (hr): 1600s 783.896489ms
+Execution time (hr): 3573s 832.1394ms
 
 #############################################

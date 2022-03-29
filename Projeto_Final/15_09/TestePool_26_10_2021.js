@@ -36,7 +36,7 @@ async function getSintomas(data){
 var hrstart = process.hrtime()
 
 function TestePool(){
-    fs.createReadStream('BancoTratado2020_29_08_21.csv')
+    fs.createReadStream('BancosTratados/BancoTratado2020_29_08_21.csv')
     .pipe(csv({}))
     .on('data', (data) => {  //Lógica aplicada a cada linha
         getSintomas(data)
@@ -54,14 +54,16 @@ function TestePool(){
         Ylinha = respRandomArray[1]
 
         let Hpidx = 1
-        let qtdHiperplanos = 19
+
+        //2020 = 25, 2021 = 31 , total = 17
+        let qtdHiperplanos = 25
         for(let i = 0; i<X.length; i++){
             let arrH_i = []
             let vivo = 0, morto = 0
             //Hpidx == qtd hiperplanos
             
             for(Hpidx = 1; Hpidx<=qtdHiperplanos;Hpidx++){
-                let arr = await readFile('Hiperplanos/poolHP2020_35_33',`Hiperplano${Hpidx}`,X.length)
+                let arr = await readFile('Hiperplanos/poolHP2021_35_33',`Hiperplano${Hpidx}`,X.length)
                 let hiperplano = arr[1]
                 hiperplano = hiperplano.split(',')
 
